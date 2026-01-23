@@ -1,11 +1,14 @@
-extends Control
+extends CanvasLayer
 
 var user_prefs: UserPreferences
 
 @onready var ResolutionButton = $SttngsBttnVBoxContainer/ResolutionHBoxContainer/ResolutionButton
 @onready var sfx_slider = $SttngsBttnVBoxContainer/SFXVolumeHBoxContainer/SFXVolumeSlider
 @onready var music_slider = $SttngsBttnVBoxContainer/MusicVolumeHBoxContainer/MusicVolumeSlider
+@onready var MUSIC_BUS_ID = AudioServer.get_bus_index("MUSIC")
+@onready var SFX_BUS_ID = AudioServer.get_bus_index("SFX")
 
+#region Ready
 func _ready() -> void:
 	user_prefs = UserPreferences.load_or_create()
 	initial_button_text()
@@ -16,6 +19,7 @@ func _ready() -> void:
 		music_slider.value = user_prefs.music_audio_level
 	if ResolutionButton:
 		set_resolution(user_prefs.window_width,user_prefs.window_height)
+#endregion
 
 #region Resolution
 func initial_button_text() -> void:
@@ -44,13 +48,15 @@ func set_resolution(width: int, height: int) -> void:
 
 #region Audio
 func _on_music_volume_slider_value_changed(value: float) -> void:
-	#AudioServer.set_bus_volumedb(MUSIC_BUS_ID, linear_to_db(value))
-	#AudioServer.set_bus_mute(MUSIC_BUS_ID, value < 0.05)
+	AudioServer.set_bus_volume_db(MUSIC_BUS_ID, linear_to_db(value))
+	AudioServer.set_bus_mute(MUSIC_BUS_ID, value < 0.05)
 	if user_prefs:
 		user_prefs.music_audio_level = value
 		user_prefs.save()
 
 func _on_sfx_volume_slider_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(SFX_BUS_ID, linear_to_db(value))
+	AudioServer.set_bus_mute(SFX_BUS_ID, value < 0.05)
 	if user_prefs:
 		user_prefs.sfx_audio_level = value
 		user_prefs.save()

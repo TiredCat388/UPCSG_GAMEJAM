@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b0k6e82chtv2y"]
+[gd_scene load_steps=2 format=3 uid="uid://b0k6e82chtv2y"]
+
+[ext_resource type="Script" uid="uid://c6s5ybwjkgmbq" path="res://scripts/ui_scripts/main_menu.gd" id="1_vjtqc"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vjtqc")
 
 [node name="MainMenuBackgroud" type="TextureRect" parent="."]
 layout_mode = 1
@@ -48,3 +51,5 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "QUIT
 "
+
+[connection signal="pressed" from="MMBttnVBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

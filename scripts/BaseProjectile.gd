@@ -1,8 +1,7 @@
 extends Area2D
 
-@export var speed: float = 10000.0
-@export var acceleration: float = 0.0 # Pixels per second², defaults to 0
-@export var color: Color = Color(1, 1, 0) # Yellow
+@export var SPEED: float = 10000.0
+@export var ACCELERATION: float = 0.0 # Pixels per second², defaults to 0
 
 var direction: Vector2 = Vector2.RIGHT
 var radius: float = 4.0
@@ -14,11 +13,11 @@ func _ready():
 		radius = collision_shape.radius
 
 func _physics_process(delta):
-	# Increase speed by acceleration
-	speed += acceleration * delta
+	# Increase SPEED by acceleration
+	SPEED += ACCELERATION * delta
 
 	# Move the bullet
-	global_position += direction * speed * delta
+	global_position += direction * SPEED * delta
 
 	# Get the current viewport rectangle
 	var viewport_rect = get_viewport().get_visible_rect()

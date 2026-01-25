@@ -3,12 +3,12 @@ extends Node2D
 # TODO: Bullet pooling
 
 # --- Configurable Variables ---
-@export var bullet_scene: PackedScene
-@export var fire_times: int = 50
-@export var fire_interval: float = 0.05
-@export var bullet_speed: float = 200.0
-@export var spin_per_shot: float = 10.0
-@export var bullet_acceleration: float = 100.0
+@export var PROJECTILE_SCENE: PackedScene
+@export var FIRE_TIMES: int = 50
+@export var FIRE_INTERVAL: float = 0.05
+@export var BULLET_SPEED: float = 200.0
+@export var SPIN_PER_SHOT: float = 10.0
+@export var BULLET_ACCELERATION: float = 100.0
 
 var bullet_hell_is_on := false
 
@@ -34,24 +34,24 @@ func bullet_hell() -> void:
 
 	bullet_hell_is_on = true
 
-	for _i in range(fire_times):
+	for _i in range(FIRE_TIMES):
 
 		# Fire in all 8 directions
 		for dir in base_directions:
-			var bullet = bullet_scene.instantiate()
+			var bullet = PROJECTILE_SCENE.instantiate()
 			bullet.top_level = true
 
 			# Rotate direction by spawner's current rotation
 			bullet.direction = dir.rotated(global_rotation)
-			bullet.speed = bullet_speed
-			bullet.acceleration = bullet_acceleration
+			bullet.SPEED = BULLET_SPEED
+			bullet.ACCELERATION = BULLET_ACCELERATION
 
 			get_tree().current_scene.add_child(bullet)
 			bullet.global_position = global_position
 
 		# Rotate the spawner itself
-		rotation += deg_to_rad(spin_per_shot)
+		rotation += deg_to_rad(SPIN_PER_SHOT)
 
-		await get_tree().create_timer(fire_interval).timeout
+		await get_tree().create_timer(FIRE_INTERVAL).timeout
 
 	bullet_hell_is_on = false

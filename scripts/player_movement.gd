@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED := 300.0
 
-@onready var spawner := $BulletSpawner   # Your child node that handles bullets
+@onready var spawner := $BulletHellSpawner   # Your child node that handles bullets
 
 func _physics_process(delta: float) -> void:
 	# --- Movement ---
@@ -20,4 +20,4 @@ func _physics_process(delta: float) -> void:
 
 	# --- Shooting ---
 	if Input.is_action_just_pressed("fire"):   # fire = spacebar in Input Map
-		spawner.shoot()
+		print_debug("pressed fire")

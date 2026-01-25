@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7svvywwun1h3"]
+
+[ext_resource type="Script" uid="uid://dk78mg177e7ic" path="res://scripts/main_character.gd" id="1_rn3bg"]
+[ext_resource type="Texture2D" uid="uid://bjd6q4o85hg8m" path="res://assets/icon.svg" id="2_pq4va"]
+[ext_resource type="Script" uid="uid://d2hv7y1ixie63" path="res://scripts/bullet_hell_spawner.gd" id="3_rsap8"]
+[ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdl7e"]
+size = Vector2(64, 63)
+
+[node name="MainCharacter" type="CharacterBody2D"]
+z_index = 50
+script = ExtResource("1_rn3bg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_pq4va")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_mdl7e")
+
+[node name="BulletHellSpawner" type="Node2D" parent="."]
+script = ExtResource("3_rsap8")
+bullet_scene = ExtResource("4_arq4a")
+fire_times = 30
+fire_interval = 0.08

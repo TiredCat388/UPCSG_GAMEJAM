@@ -1,13 +1,16 @@
 extends Node2D
 
+# TODO: Bullet pooling
+
 # --- Configurable Variables ---
 @export var bullet_scene: PackedScene
 @export var fire_times: int = 50
-@export var fire_interval: float = 0.8
-@export var bullet_speed: float = 10000.0
-@export var spin_per_shot: float = 10.0   # degrees per fire
+@export var fire_interval: float = 0.05
+@export var bullet_speed: float = 200.0
+@export var spin_per_shot: float = 10.0
+@export var bullet_acceleration: float = 100.0
 
-var can_shoot := true
+var bullet_hell_is_on := false
 
 # Base 8 directions (local space)
 var base_directions := [
@@ -25,11 +28,11 @@ func _ready():
 	for i in range(base_directions.size()):
 		base_directions[i] = base_directions[i].normalized()
 
-func shoot() -> void:
-	if not can_shoot:
+func bullet_hell() -> void:
+	if bullet_hell_is_on:
 		return
 
-	can_shoot = false
+	bullet_hell_is_on = true
 
 	for _i in range(fire_times):
 
@@ -41,6 +44,7 @@ func shoot() -> void:
 			# Rotate direction by spawner's current rotation
 			bullet.direction = dir.rotated(global_rotation)
 			bullet.speed = bullet_speed
+			bullet.acceleration = bullet_acceleration
 
 			get_tree().current_scene.add_child(bullet)
 			bullet.global_position = global_position
@@ -50,4 +54,4 @@ func shoot() -> void:
 
 		await get_tree().create_timer(fire_interval).timeout
 
-	can_shoot = true
+	bullet_hell_is_on = false

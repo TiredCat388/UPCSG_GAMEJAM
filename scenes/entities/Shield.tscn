@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cak2yot5p3mmj"]
+
+[ext_resource type="Texture2D" uid="uid://b8k0it2qm45st" path="res://assets/default_bullet.png" id="1_tv5um"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tv5um"]
+
+[node name="Shield" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.07, 0.1)
+texture = ExtResource("1_tv5um")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_tv5um")

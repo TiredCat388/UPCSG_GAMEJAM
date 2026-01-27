@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 # --- CONFIGURATION ---
-const JSON_PATH = "res://assets/json/dialogue_data.json"
+const JSON_PATH = "res://resources/json/dialogue_data.json"
 
 # --- UI REFERENCES ---
 @onready var dialogue_panel = $Control/DialoguePanel

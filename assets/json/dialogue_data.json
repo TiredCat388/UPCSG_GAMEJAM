@@ -1,8 +1,218 @@
-{
-	"test_conversation": [
-		{
-			"name": "Testing",
-			"text": "Testing Worked!"
-		},
+[
+  {
+	"scene_id": 1,
+	"title": "Narration",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "Narrator",
+		"text": "History is written by the victors. The ones with the shiny armor, the destiny-forged swords, and the unlimited credit cards."
+	  },
+	  {
+		"speaker": "Narrator",
+		"text": "But what about the fodder? The XP grind? The Level 1 trash mobs? Today, history takes... the path less taken."
+	  }
 	]
-}
+  },
+  {
+	"scene_id": 2,
+	"title": "Introduction to the Game",
+	"type": "gameplay",
+	"dialogue": [
+	  {
+		"speaker": "Narrator",
+		"text": "You are a Goblin. You have 5 HP. You have a rusty spoon for a weapon. And your goal? survive Him."
+	  },
+	  {
+		"speaker": "System",
+		"text": "USE [WASD] TO COWER. PRESS [SPACE] TO SCURRY."
+	  }
+	]
+  },
+  {
+	"scene_id": 3,
+	"title": "Meets the Hero 1st Time",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "The Hero",
+		"text": "Ugh, finally the tutorial zone. Alright, where’s the boss? I need to speedrun this before my EXP boost potion expires."
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "Oh, just a mob. Out of my way, trash."
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "Glitchy hitbox... whatever. Not worth the mana."
+	  }
+	]
+  },
+  {
+	"scene_id": 4,
+	"title": "Traumatized Goblin Tip",
+	"type": "interaction",
+	"dialogue": [
+	  {
+		"speaker": "Traumatized Goblin",
+		"text": "Psst! You! New spawn? Listen to me!"
+	  },
+	  {
+		"speaker": "Traumatized Goblin",
+		"text": "I’ve seen him... The Golden One. He follows a pattern! When he shouts 'For Justice!', he’s actually charging his AOE attack!"
+	  },
+	  {
+		"speaker": "Traumatized Goblin",
+		"text": "Don't engage! Hide in the bushes until the glowing stops! That’s Phase 1... only the mad survive Phase 1."
+	  }
+	]
+  },
+  {
+	"scene_id": 5,
+	"title": "Meets the Hero 2nd Time",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "The Hero",
+		"text": "Legendary drop rate is 0.5%? That’s rigged. I should open a support ticket."
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "Wait. You again? I swear I cleared this area. Is the respawn timer broken?"
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "Whatever. Free XP is free XP."
+	  }
+	]
+  },
+  {
+	"scene_id": 6,
+	"title": "Armor Smith Tip",
+	"type": "interaction",
+	"dialogue": [
+	  {
+		"speaker": "Armor Smith",
+		"text": "A goblin? Buying armor? Hah! I don't make goblin sizes."
+	  },
+	  {
+		"speaker": "Armor Smith",
+		"text": "But... if you're planning to fight Him... take this advice for free."
+	  },
+	  {
+		"speaker": "Armor Smith",
+		"text": "His shiny armor? It’s elemental. He swaps elements every time he takes damage. If his shield is Red, he absorbs Fire. If it's Blue, he absorbs Water. Don't heal him, you idiot. Watch the colors."
+	  }
+	]
+  },
+  {
+	"scene_id": 7,
+	"title": "Meets the Hero 3rd Time",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "The Hero",
+		"text": "Stupid collision detection! Why can't I climb this? I paid $50 for the Climbing Boots DLC!"
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "Okay, seriously? Stop following me. You’re ruining my immersion. Get lost, you buggy little NPC, or I’m reporting this to the devs."
+	  }
+	]
+  },
+  {
+	"scene_id": 8,
+	"title": "Monkey Tip",
+	"type": "interaction",
+	"dialogue": [
+	  {
+		"speaker": "Monkey",
+		"text": "Ooh ooh! Ahh ahh!"
+	  },
+	  {
+		"speaker": "Monkey",
+		"text": "Ooh! (Points to banana, mimes falling aggressively)"
+	  },
+	  {
+		"speaker": "System",
+		"text": "New Item Acquired: Tactical Banana Peel."
+	  }
+	]
+  },
+  {
+	"scene_id": 9,
+	"title": "Meets the Hero 4th Time",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "The Hero",
+		"text": "I AM TRYING TO STREAM HERE! Stop stream-sniping me!"
+	  },
+	  {
+		"speaker": "The Hero",
+		"text": "BEGONE!"
+	  },
+	  {
+		"speaker": "System",
+		"text": "YOU DIED. (But death is just a mechanic, isn't it?)"
+	  }
+	]
+  },
+  {
+	"scene_id": 10,
+	"title": "Merchant Tip",
+	"type": "interaction",
+	"dialogue": [
+	  {
+		"speaker": "Merchant",
+		"text": "Heh. Rough day? He got you with the 'Ultimate Whale Slash,' didn't he?"
+	  },
+	  {
+		"speaker": "Merchant",
+		"text": "Listen closely, little friend. He’s not skilled. He’s 'Pay-to-Win.' His stats are bought, not earned."
+	  },
+	  {
+		"speaker": "Merchant",
+		"text": "But his wallet has a weakness... impatience. He attacks relentlessly because he bought the 'Stamina Infinite' pass."
+	  },
+	  {
+		"speaker": "Merchant",
+		"text": "But he can't turn. He can't stop. Use his momentum against him. He's just a wallet with a sword."
+	  }
+	]
+  },
+  {
+	"scene_id": 11,
+	"title": "Final Fight",
+	"type": "boss_fight",
+	"dialogue": [
+	  {
+		"speaker": "The Hero",
+		"text": "Okay. That’s it. No more games. I’m popping my Ultimate Elixirs. I’m activating my buffs. I am going to delete your sprite from the game files!"
+	  }
+	],
+	"triggers": [
+	  {
+		"condition": "banana_used",
+		"speaker": "The Hero",
+		"text": "Who put fruit on the battlefield?! My $500 boots!"
+	  },
+	  {
+		"condition": "element_counter",
+		"speaker": "The Hero",
+		"text": "How are you piercing my Diamond-Tier subscription armor?!"
+	  },
+	  {
+		"condition": "hero_defeated",
+		"speaker": "The Hero",
+		"text": "Impossible... My gear score... is over 9000... How could a free-to-play mob..."
+	  }
+	],
+	"epilogue": [
+	  {
+		"speaker": "Narrator",
+		"text": "And so, the path less taken led to the greatest victory of all. The server is quiet. The loot is... well, you can't use it, it's class-locked. But the silence? That's yours. Good game, Goblin. Good game."
+	  }
+	]
+  }
+]

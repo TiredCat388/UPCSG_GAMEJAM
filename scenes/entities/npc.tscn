@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbhs2jqumnb08"]
+
+[ext_resource type="Script" uid="uid://b8v0ovasbeb6" path="res://scripts/NPC.gd" id="1_p5uw1"]
+[ext_resource type="Texture2D" uid="uid://biqmtxmukungu" path="res://assets/placeholders/NPC1.svg" id="2_xjnpb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_67e1k"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hg1eu"]
+radius = 50.0
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_p5uw1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xjnpb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_67e1k")
+
+[node name="ChatZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChatZone"]
+shape = SubResource("CircleShape2D_hg1eu")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -58.0
+offset_top = -47.0
+offset_right = 68.0
+offset_bottom = -24.0
+text = "press \"E\" to Talk"

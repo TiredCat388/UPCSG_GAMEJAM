@@ -17,14 +17,10 @@ var is_typing = false
 func _ready():
 	# 1. Hide the box initially
 	dialogue_panel.hide()
+	show()
 	
 	# 2. Load the database
 	load_json()
-	
-	# --- TEST ZONE ---
-	# We wait 1 second, then test Scene 1 (Narration)
-	await get_tree().create_timer(1.0).timeout
-	start_dialogue(1) 
 
 func load_json():
 	if not FileAccess.file_exists(JSON_PATH):
@@ -88,8 +84,8 @@ func show_next_line():
 func _input(event):
 	if not dialogue_panel.visible: return
 	
-	# Check for Spacebar, Enter, OR Left Mouse Click
-	if event.is_action_pressed("ui_accept") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+	# Check for Space, Enter, Mouse Click... OR "E" (interact)
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		if is_typing:
 			# If typing, skip to the end instantly
 			var tweens = get_tree().get_processed_tweens()

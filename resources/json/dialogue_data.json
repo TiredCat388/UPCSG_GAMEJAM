@@ -21,7 +21,7 @@
 	"dialogue": [
 	  {
 		"speaker": "Narrator",
-		"text": "You are a Goblin. You have 5 HP. You have a rusty spoon for a weapon. And your goal? survive Him."
+		"text": "You are a Goblin. You have 5 HP. You have a wood for a weapon. And your goal? survive Him."
 	  },
 	  {
 		"speaker": "System",
@@ -55,15 +55,19 @@
 	"dialogue": [
 	  {
 		"speaker": "Traumatized Goblin",
-		"text": "Psst! You! New spawn? Listen to me!"
+		"text": "New spawn? I assume he got you good huh"
 	  },
 	  {
 		"speaker": "Traumatized Goblin",
-		"text": "I’ve seen him... The Golden One. He follows a pattern! When he shouts 'For Justice!', he’s actually charging his AOE attack!"
+		"text": "That man is crazy, He just shouts 'FOR EXP!!!' and bullets just come at you."
 	  },
 	  {
 		"speaker": "Traumatized Goblin",
-		"text": "Don't engage! Hide in the bushes until the glowing stops! That’s Phase 1... only the mad survive Phase 1."
+		"text": "*sighs* If only there was a way we can deflect the bullets back at him."
+	  },
+	  {
+		"speaker": "Traumatized Goblin",
+		"text": "I know! I made this device that might help me beat him someday, why don't you give it a try? the doors that way."
 	  }
 	]
   },
@@ -101,7 +105,15 @@
 	  },
 	  {
 		"speaker": "Armor Smith",
-		"text": "His shiny armor? It’s elemental. He swaps elements every time he takes damage. If his shield is Red, he absorbs Fire. If it's Blue, he absorbs Water. Don't heal him, you idiot. Watch the colors."
+		"text": "His shiny armor? It’s elemental. He swaps elements every time he takes damage...."
+	  },
+	  {
+		"speaker": "Armor Smith",
+		"text": "Wait a minute, you're a goblin! I gotta explain it simpler. Matchy Color NO NO, Opposite color YES YES. You get it right?"
+	  },
+	  {
+		"speaker": "Armor Smith",
+		"text": "Anyway you gotta test out what you've learned, the doors that way."
 	  }
 	]
   },
@@ -133,10 +145,6 @@
 		"speaker": "Monkey",
 		"text": "Ooh! (Points to banana, mimes falling aggressively)"
 	  },
-	  {
-		"speaker": "System",
-		"text": "New Item Acquired: Tactical Banana Peel."
-	  }
 	]
   },
   {
@@ -165,11 +173,11 @@
 	"dialogue": [
 	  {
 		"speaker": "Merchant",
-		"text": "Heh. Rough day? He got you with the 'Ultimate Whale Slash,' didn't he?"
+		"text": "Heh. Rough day? He got you with the 'Ultimate Whale Slash,' or what he calls it didn't he?"
 	  },
 	  {
 		"speaker": "Merchant",
-		"text": "Listen closely, little friend. He’s not skilled. He’s 'Pay-to-Win.' His stats are bought, not earned."
+		"text": "Listen closely, little friend. He’s not skilled. He’s rich! He bought all of those gear just to be 'All Powerful'"
 	  },
 	  {
 		"speaker": "Merchant",

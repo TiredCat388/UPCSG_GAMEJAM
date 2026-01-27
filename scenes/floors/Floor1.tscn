@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://dm1hry00e8pna" path="res://assets/placeholders/wall_placeholder.png" id="1_x1mh6"]
 [ext_resource type="Texture2D" uid="uid://blp207hch27yy" path="res://assets/placeholders/floor_placeholder.png" id="2_7f4sq"]
-[ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/Player.tscn" id="3_7f4sq"]
+[ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/player/Player.tscn" id="3_7f4sq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sv8ea"]
 texture = ExtResource("1_x1mh6")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 0, 16, 0, 16, 16, -16, 16)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c1aho"]
 texture = ExtResource("2_7f4sq")

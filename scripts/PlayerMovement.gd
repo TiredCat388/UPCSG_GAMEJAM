@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var MAX_SPEED: float = 400.0
 @export var ACCELERATION: float = 1600.0
 @export var DECELERATION: float = 2000.0
+@export var animation_tree: AnimationTree
 
 var facing_direction: Vector2 = Vector2.RIGHT
 
@@ -45,6 +46,7 @@ func try_dash(input_direction: Vector2) -> void:
 func _physics_process(delta: float) -> void:
 	# Normalizes player input to handle diagonal movement properly
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
+	animation_tree.set("parameters/goblin_movement/blend_position", velocity.normalized())
 	if input_direction != Vector2.ZERO:
 		facing_direction = input_direction.normalized()
 

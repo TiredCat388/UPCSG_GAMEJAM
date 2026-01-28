@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://qcow2pkj11k1"]
+
+[ext_resource type="Script" uid="uid://ckra3v8mj30x3" path="res://scripts/RoomBounds.gd" id="1_e3op1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psy6g"]
+resource_local_to_scene = true
+size = Vector2(48, 48)
+
+[node name="RoomBounds" type="Area2D" unique_id=1634083806]
+script = ExtResource("1_e3op1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1936798602]
+shape = SubResource("RectangleShape2D_psy6g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

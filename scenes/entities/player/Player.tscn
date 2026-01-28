@@ -139,7 +139,7 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_rqwkw")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_hgjck")
 blend_point_3/pos = Vector2(0, 1)
-blend_mode = 2
+blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rx1o7"]
 advance_mode = 2
@@ -184,3 +184,8 @@ tree_root = SubResource("AnimationNodeStateMachine_ppr6r")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/goblin_movement/blend_position = Vector2(0.18660283, 0.10313904)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1638717287]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.5

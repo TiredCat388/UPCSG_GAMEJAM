@@ -30,7 +30,7 @@ func initial_button_text() -> void:
 func _change_resolution(id: int) -> void:
 	match id:
 		0:
-			set_resolution(720,480)
+			set_resolution(960, 540)
 		1: 
 			set_resolution(1280,720)
 		2:

@@ -14,6 +14,7 @@ var stop_timer: float = 0.0
 
 func _ready():
 	pick_new_target()
+	show()
 
 func _physics_process(delta):
 	if stopping:

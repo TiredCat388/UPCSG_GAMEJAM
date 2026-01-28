@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyxxjm0hqnu8i"]
+[gd_scene format=3 uid="uid://cyxxjm0hqnu8i"]
 
-[ext_resource type="Script" uid="uid://cndjf2p14c6wj" path="res://scripts/ui_scripts/settings.gd" id="1_o2bc3"]
+[ext_resource type="Script" uid="uid://dlu05mu6nanjh" path="res://scripts/ui_scripts/settings.gd" id="1_o2bc3"]
 
-[node name="Settings" type="CanvasLayer"]
+[node name="Settings" type="CanvasLayer" unique_id=715505550]
 script = ExtResource("1_o2bc3")
 
-[node name="SttngsBttnVBoxContainer" type="VBoxContainer" parent="."]
+[node name="SttngsBttnVBoxContainer" type="VBoxContainer" parent="." unique_id=405447706]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -18,51 +18,51 @@ offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ResolutionHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer"]
+[node name="ResolutionHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer" unique_id=1409603928]
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="SttngsBttnVBoxContainer/ResolutionHBoxContainer"]
+[node name="ResolutionLabel" type="Label" parent="SttngsBttnVBoxContainer/ResolutionHBoxContainer" unique_id=1010901909]
 layout_mode = 2
 text = "Screen Resolution: "
 
-[node name="ResolutionButton" type="MenuButton" parent="SttngsBttnVBoxContainer/ResolutionHBoxContainer"]
+[node name="ResolutionButton" type="MenuButton" parent="SttngsBttnVBoxContainer/ResolutionHBoxContainer" unique_id=2034817223]
 layout_mode = 2
 size_flags_horizontal = 3
 flat = false
 item_count = 3
-popup/item_0/text = "720x480"
+popup/item_0/text = "960x540"
 popup/item_0/id = 0
 popup/item_1/text = "1280x720"
 popup/item_1/id = 1
 popup/item_2/text = "1920x1080"
 popup/item_2/id = 2
 
-[node name="MusicVolumeHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer"]
+[node name="MusicVolumeHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer" unique_id=1000045112]
 layout_mode = 2
 
-[node name="MusicVolumeLabel" type="Label" parent="SttngsBttnVBoxContainer/MusicVolumeHBoxContainer"]
+[node name="MusicVolumeLabel" type="Label" parent="SttngsBttnVBoxContainer/MusicVolumeHBoxContainer" unique_id=391932090]
 layout_mode = 2
 text = "Music Volume: "
 
-[node name="MusicVolumeSlider" type="HSlider" parent="SttngsBttnVBoxContainer/MusicVolumeHBoxContainer"]
+[node name="MusicVolumeSlider" type="HSlider" parent="SttngsBttnVBoxContainer/MusicVolumeHBoxContainer" unique_id=1404519021]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="SFXVolumeHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer"]
+[node name="SFXVolumeHBoxContainer" type="HBoxContainer" parent="SttngsBttnVBoxContainer" unique_id=1911173601]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 
-[node name="SFXVolumeLabel" type="Label" parent="SttngsBttnVBoxContainer/SFXVolumeHBoxContainer"]
+[node name="SFXVolumeLabel" type="Label" parent="SttngsBttnVBoxContainer/SFXVolumeHBoxContainer" unique_id=2065129970]
 layout_mode = 2
 text = "SFX Volume: "
 
-[node name="SFXVolumeSlider" type="HSlider" parent="SttngsBttnVBoxContainer/SFXVolumeHBoxContainer"]
+[node name="SFXVolumeSlider" type="HSlider" parent="SttngsBttnVBoxContainer/SFXVolumeHBoxContainer" unique_id=2080487473]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="CloseButton" type="Button" parent="."]
+[node name="CloseButton" type="Button" parent="." unique_id=358628532]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://cak2yot5p3mmj"]
 
-[ext_resource type="Texture2D" uid="uid://b8k0it2qm45st" path="res://assets/default_bullet.png" id="1_tv5um"]
+[ext_resource type="Texture2D" uid="uid://ch8dbjexlwil2" path="res://assets/shield.png" id="1_3dyab"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tv5um"]
 
 [node name="Shield" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.07, 0.1)
-texture = ExtResource("1_tv5um")
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("1_3dyab")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)

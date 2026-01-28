@@ -10,21 +10,17 @@ const JSON_PATH = "res://resources/json/dialogue_data.json"
 @onready var portrait_rect = $Control/DialoguePanel/MarginContainer/MainHBox/PortraitRect
 
 # --- STATE VARIABLES ---
-var dialogue_data = {}
+var dialogue_lookup = {} # We will convert the JSON array into this dictionary
 var current_queue = []
 var is_typing = false
 
 func _ready():
 	# 1. Hide the box initially
 	dialogue_panel.hide()
+	show()
 	
 	# 2. Load the database
 	load_json()
-	
-	# --- TEST ZONE ---
-	# We wait 1 second, then force the test conversation to start
-	await get_tree().create_timer(1.0).timeout
-	start_dialogue("test_conversation") 
 
 func load_json():
 	if not FileAccess.file_exists(JSON_PATH):
@@ -36,19 +32,30 @@ func load_json():
 	var json = JSON.new()
 	
 	if json.parse(content) == OK:
-		dialogue_data = json.data
-		print("JSON Loaded Successfully!")
+		var data_array = json.data
+		
+		for scene in data_array:
+			var id = str(int(scene["scene_id"]))
+			dialogue_lookup[id] = scene
+			
+		print("JSON Loaded Successfully! Scenes found: ", dialogue_lookup.keys())
 	else:
-		print("JSON Parse Error!")
+		print("JSON Parse Error: ", json.get_error_message())
 
 func start_dialogue(id):
-	if id in dialogue_data:
-		# Copy the data so we don't destroy the original
-		current_queue = dialogue_data[id].duplicate()
-		dialogue_panel.show()
-		show_next_line()
+	var id_str = str(id)
+	
+	if id_str in dialogue_lookup:
+		var scene_data = dialogue_lookup[id_str]
+		
+		if scene_data.has("dialogue"):
+			current_queue = scene_data["dialogue"].duplicate()
+			dialogue_panel.show()
+			show_next_line()
+		else:
+			print("Error: Scene ID " + id_str + " has no 'dialogue' array.")
 	else:
-		print("Error: Dialogue ID '" + id + "' not found.")
+		print("Error: Scene ID '" + id_str + "' not found in data.")
 
 func show_next_line():
 	if current_queue.is_empty():
@@ -56,8 +63,14 @@ func show_next_line():
 		return
 
 	var line = current_queue.pop_front()
-	name_label.text = line["name"]
+	
+	name_label.text = line["speaker"] 
 	text_label.text = line["text"]
+	
+	if line["speaker"] == "Narrator" or line["speaker"] == "System":
+		portrait_rect.hide()
+	else:
+		portrait_rect.show()
 	
 	# Typewriter Animation
 	text_label.visible_ratio = 0.0
@@ -71,8 +84,8 @@ func show_next_line():
 func _input(event):
 	if not dialogue_panel.visible: return
 	
-	# Check for Spacebar, Enter, OR Left Mouse Click
-	if event.is_action_pressed("ui_accept") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+	# Check for Space, Enter, Mouse Click... OR "E" (interact)
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		if is_typing:
 			# If typing, skip to the end instantly
 			var tweens = get_tree().get_processed_tweens()

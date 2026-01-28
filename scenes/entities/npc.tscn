@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dbhs2jqumnb08"]
+
+[ext_resource type="Script" path="res://scripts/NPC.gd" id="1_p5uw1"]
+[ext_resource type="Texture2D" uid="uid://bpudd1whg4fjn" path="res://assets/characters/NPCENCOUNTERS.png" id="2_4kvco"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_67e1k"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hg1eu"]
+radius = 50.0
+
+[node name="NPC" type="CharacterBody2D" unique_id=4503530]
+script = ExtResource("1_p5uw1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=634034095]
+texture_filter = 1
+texture = ExtResource("2_4kvco")
+hframes = 11
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1434449222]
+shape = SubResource("CircleShape2D_67e1k")
+
+[node name="ChatZone" type="Area2D" parent="." unique_id=964369661]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChatZone" unique_id=715251501]
+shape = SubResource("CircleShape2D_hg1eu")
+
+[node name="Label" type="Label" parent="." unique_id=1850954631]
+visible = false
+offset_left = -58.0
+offset_top = -47.0
+offset_right = 68.0
+offset_bottom = -24.0
+text = "press \"E\" to Talk"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1186021333]
+root_node = NodePath("../Sprite2D")

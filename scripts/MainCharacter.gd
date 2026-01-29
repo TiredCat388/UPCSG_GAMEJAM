@@ -75,4 +75,3 @@ func throw_sword_slash():
 	
 	get_tree().current_scene.add_child(sword_slash)
 	sword_slash.global_position = global_position
-	

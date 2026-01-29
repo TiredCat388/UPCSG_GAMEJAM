@@ -14,6 +14,7 @@ script = ExtResource("1_p5uw1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=634034095]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4kvco")
 hframes = 11
 vframes = 4

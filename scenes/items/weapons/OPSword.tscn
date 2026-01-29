@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnu6eus0hrjeq"]
+
+[ext_resource type="Texture2D" uid="uid://qtilu2aulwbp" path="res://assets/op_sword_placeholder.png" id="1_7ymdg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bio6"]
+size = Vector2(117, 35)
+
+[node name="OpSword" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(55.37208, 0)
+rotation = 0.7853982
+scale = Vector2(0.29522863, 0.29522863)
+texture = ExtResource("1_7ymdg")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(58.5, -0.5)
+shape = SubResource("RectangleShape2D_6bio6")

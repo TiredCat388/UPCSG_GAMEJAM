@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var bullet_hell_spawner := $BulletHellSpawner 
 
+@export var projectile_scene: PackedScene
 @export var speed: float = 100.0
 @export var stop_time_min: float = 1.0
 @export var stop_time_max: float = 3.0
@@ -43,4 +44,22 @@ func stop_and_attack():
 	stopping = true
 	velocity = Vector2.ZERO
 	move_and_slide()
-	bullet_hell_spawner.bullet_hell()
+	# bullet_hell_spawner.bullet_hell()
+	throw_sword_slash()
+
+func throw_sword_slash():
+	# check if op sword is equiped
+	if not projectile_scene:
+		return
+
+	var sword_slash = projectile_scene.instantiate()
+	sword_slash.top_level = true
+	sword_slash.SPEED = 600
+
+	sword_slash.direction = (target_position - global_position).normalized()
+
+	# sword_slash.RANGE = 800
+	
+	get_tree().current_scene.add_child(sword_slash)
+	sword_slash.global_position = global_position
+	

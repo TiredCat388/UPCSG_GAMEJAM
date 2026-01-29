@@ -7,7 +7,25 @@
 radius = 9.055386
 
 [node name="Projectile" type="Area2D"]
-editor_description = "Generic scenes for projectiles"
+editor_description = "Generic scenes for projectiles
+
+Projectile behavior:
+- Moves in a given direction with optional acceleration.
+- If RANGE < 0: projectile is destroyed when it leaves the screen.
+- If RANGE >= 0: projectile is destroyed after traveling the given distance (in pixels).
+- Distance traveled is accumulated per frame for accuracy.
+- Collision radius is read from a CircleShape2D if present.
+
+Recommended RANGE values (pixels):
+- < 0        : Screen-based cleanup (default for most bullets)
+- 120–250    : Short range (slash waves, shotgun pellets, melee-like projectiles)
+- 350–700    : Medium range (standard enemy or player projectiles)
+- 900–1500   : Long range (snipers, boss attacks)
+- 1800+      : Extreme range (lasers, railgun-style shots, large/zoomed-out maps)
+
+Rule of thumb:
+- Good range ≈ 0.5× to 1.2× camera width
+"
 z_index = -1
 script = ExtResource("1_g52qf")
 

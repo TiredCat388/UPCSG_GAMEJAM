@@ -13,8 +13,11 @@ position = Vector2(271, 308)
 position = Vector2(800, 312)
 fight_type = 1
 
-[node name="Obstacle" parent="." instance=ExtResource("3_m1ec6")]
-position = Vector2(419, 250)
+[node name="Obstacle" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
+position = Vector2(390, 205)
 
-[node name="Obstacle2" parent="." instance=ExtResource("3_m1ec6")]
+[node name="Obstacle2" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
 position = Vector2(594, 257)
+
+[node name="Obstacle3" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
+position = Vector2(462, 357)

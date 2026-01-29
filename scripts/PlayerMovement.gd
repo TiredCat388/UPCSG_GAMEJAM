@@ -72,3 +72,6 @@ func _physics_process(delta: float) -> void:
 			)
 
 	move_and_slide()
+
+func get_normal():
+	return facing_direction

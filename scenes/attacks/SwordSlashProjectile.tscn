@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cl7m44b67xy5o"]
+[gd_scene format=3 uid="uid://cl7m44b67xy5o"]
 
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="1_g2y32"]
 [ext_resource type="Texture2D" uid="uid://b7qeg7ajs1u8i" path="res://assets/SwordSlash.png" id="2_a8evf"]

@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/PlayerMovement.gd" id="1_afppm"]
 [ext_resource type="Texture2D" uid="uid://d0uk61jl4pyrk" path="res://assets/characters/player_goblin.png" id="2_afppm"]
+[ext_resource type="Script" uid="uid://cqnkbmrjet5ia" path="res://scenes/entities/SwordSwinger.gd" id="3_24gqh"]
+[ext_resource type="PackedScene" uid="uid://bnu6eus0hrjeq" path="res://scenes/items/weapons/OPSword.tscn" id="4_yjynp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1xdv"]
 
@@ -158,13 +160,13 @@ states/goblin_idle/position = Vector2(387, 69)
 states/goblin_movement/node = SubResource("AnimationNodeBlendSpace2D_ppr6r")
 states/goblin_movement/position = Vector2(601, 69)
 transitions = ["Start", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_rx1o7"), "goblin_idle", "goblin_movement", SubResource("AnimationNodeStateMachineTransition_rqk8h"), "goblin_movement", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_20ow7")]
+graph_offset = Vector2(-92.399994, 17.24253)
 
 [node name="Player" type="CharacterBody2D" unique_id=1935441600 node_paths=PackedStringArray("animation_tree") groups=["player"]]
 z_index = 50
 script = ExtResource("1_afppm")
 MAX_SPEED = 100.0
 animation_tree = NodePath("AnimationTree")
-dash_speed = 250.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1616260819]
 texture_filter = 1
@@ -190,3 +192,7 @@ zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 2.5
+
+[node name="SwordSwinger" type="Node2D" parent="." unique_id=1318722087]
+script = ExtResource("3_24gqh")
+sword_scene = ExtResource("4_yjynp")

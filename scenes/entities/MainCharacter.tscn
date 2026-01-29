@@ -1,28 +1,42 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7svvywwun1h3"]
+[gd_scene format=3 uid="uid://c7svvywwun1h3"]
 
-[ext_resource type="Script" path="res://scripts/MainCharacter.gd" id="1_vk5kn"]
+[ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/MainCharacter.gd" id="1_vk5kn"]
 [ext_resource type="Texture2D" uid="uid://bjd6q4o85hg8m" path="res://assets/icon.svg" id="2_pq4va"]
 [ext_resource type="PackedScene" uid="uid://cl7m44b67xy5o" path="res://scenes/attacks/SwordSlashProjectile.tscn" id="2_wx53h"]
 [ext_resource type="Script" uid="uid://doc3c4ubr2ye6" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
+[ext_resource type="Script" uid="uid://cqnkbmrjet5ia" path="res://scenes/entities/SwordSwinger.gd" id="6_hiuhk"]
+[ext_resource type="PackedScene" uid="uid://bnu6eus0hrjeq" path="res://scenes/items/weapons/OPSword.tscn" id="7_o6ye3"]
+[ext_resource type="Script" uid="uid://cyq64v44aqca7" path="res://scenes/entities/FloatingWeaponSocket.gd" id="8_37ipj"]
+[ext_resource type="PackedScene" uid="uid://cr5fw8tc0ee3f" path="res://scenes/items/weapons/ThorsHammer.tscn" id="9_ih5qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdl7e"]
 size = Vector2(64, 63)
 
-[node name="MainCharacter" type="CharacterBody2D"]
+[node name="MainCharacter" type="CharacterBody2D" unique_id=516525854]
 z_index = 50
 script = ExtResource("1_vk5kn")
 projectile_scene = ExtResource("2_wx53h")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1137343325]
 position = Vector2(1, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_pq4va")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1579365314]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_mdl7e")
 
-[node name="BulletHellSpawner" type="Node2D" parent="."]
+[node name="BulletHellSpawner" type="Node2D" parent="." unique_id=526308443]
 script = ExtResource("3_vk5kn")
 PROJECTILE_SCENE = ExtResource("4_arq4a")
+
+[node name="SwordSwinger" type="Node2D" parent="." unique_id=1148069351]
+script = ExtResource("6_hiuhk")
+sword_scene = ExtResource("7_o6ye3")
+
+[node name="FloatingWeaponSocket" type="Node2D" parent="." unique_id=2099044849]
+position = Vector2(-61.999996, 0)
+script = ExtResource("8_37ipj")
+weapon_scene = ExtResource("9_ih5qh")
+target_scale = Vector2(1.5, 1.5)

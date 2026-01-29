@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 @onready var bullet_hell_spawner := $BulletHellSpawner 
+@onready var sword_swinger := $SwordSwinger 
+@onready var floating_weapon := $FloatingWeaponSocket
 
 @export var projectile_scene: PackedScene
 @export var speed: float = 100.0
@@ -25,6 +27,14 @@ func _physics_process(delta):
 	else:
 		move_towards_target(delta)
 
+func get_facing_direction() -> Vector2:
+	if stopping:
+		# Face target when attacking
+		return (target_position - global_position).normalized()
+	elif velocity.length() > 0:
+		return velocity.normalized()
+	else:
+		return Vector2.RIGHT
 
 func pick_new_target():
 	var rect = get_viewport().get_visible_rect()
@@ -45,7 +55,10 @@ func stop_and_attack():
 	velocity = Vector2.ZERO
 	move_and_slide()
 	# bullet_hell_spawner.bullet_hell()
-	throw_sword_slash()
+	# throw_sword_slash()
+	# sword_swinger.swing_sword()
+	floating_weapon.first_attack()
+	print("attaks")
 
 func throw_sword_slash():
 	# check if op sword is equiped

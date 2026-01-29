@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+# Reference the child node
+@onready var sword_swinger: Node = $SwordSwinger  # Change Node to whatever type SwordSwinger is
+
 @export var MAX_SPEED: float = 400.0
 @export var ACCELERATION: float = 1600.0
 @export var DECELERATION: float = 2000.0
@@ -72,3 +75,8 @@ func _physics_process(delta: float) -> void:
 			)
 
 	move_and_slide()
+	
+func _process(delta: float) -> void:
+	# Swing sword when Q is pressed
+	if Input.is_action_just_pressed("swing_sword"):  # map "q" to this input action
+		sword_swinger.swing_sword()

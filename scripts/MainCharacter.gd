@@ -58,6 +58,7 @@ func stop_and_attack():
 	# throw_sword_slash()
 	# sword_swinger.swing_sword()
 	floating_weapon.first_attack()
+	# floating_weapon.second_attack(get_facing_direction())
 	print("attaks")
 
 func throw_sword_slash():

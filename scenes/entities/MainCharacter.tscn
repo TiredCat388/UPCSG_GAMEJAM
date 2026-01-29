@@ -36,7 +36,7 @@ script = ExtResource("6_hiuhk")
 sword_scene = ExtResource("7_o6ye3")
 
 [node name="FloatingWeaponSocket" type="Node2D" parent="." unique_id=2099044849]
-position = Vector2(-61.999996, 0)
+position = Vector2(-62, 23)
 script = ExtResource("8_37ipj")
 weapon_scene = ExtResource("9_ih5qh")
-target_scale = Vector2(1.5, 1.5)
+target_scale = Vector2(1.6, 1.6)

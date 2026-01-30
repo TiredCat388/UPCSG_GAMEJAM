@@ -133,6 +133,7 @@ blend_mode = 1
 
 [node name="MainCharacter" type="CharacterBody2D" unique_id=990402041]
 z_index = 50
+collision_layer = 2
 script = ExtResource("1_vk5kn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=879760014]

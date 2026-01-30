@@ -274,10 +274,11 @@ transitions = ["Start", "goblin_idle", SubResource("AnimationNodeStateMachineTra
 
 [node name="Player" type="CharacterBody2D" unique_id=881109633 node_paths=PackedStringArray("animation_tree") groups=["player"]]
 z_index = 50
+collision_mask = 7
 script = ExtResource("1_afppm")
 MAX_SPEED = 100.0
-animation_tree = NodePath("AnimationTree")
 dash_speed = 250.0
+animation_tree = NodePath("AnimationTree")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=107362491]
 texture_filter = 1

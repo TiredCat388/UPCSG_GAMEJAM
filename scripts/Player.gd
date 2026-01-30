@@ -57,17 +57,36 @@ func try_dash(input_direction: Vector2) -> void:
 #endregion
 
 
+#region Banana
+@export var banana_spawn_cooldown: float = 1.0
+var banana_spawn_cooldown_timer: float = 0.0
+
+var bananas : Array = []
+
+func throw_banana() -> void:
+	for banana in bananas:
+		if not banana.is_visible():
+			banana.global_position = global_position
+			await get_tree().create_timer(0.1).timeout
+			banana.start_expire()
+			banana.show()
+			return
+		
+	print("No available bananas to throw.")
+#endregion
+
+
 func take_damage(amount: float) -> String:
 	if is_parrying:
 		print("Parried the attack!")
 		return "parried"
 
-	health -= amount
-	print("Player Health: %d" % health)
+	player_health -= amount
+	print("Player Health: %d" % player_health)
 
-	if health <= 0:
+	if player_health <= 0:
 		print("Player defeated!")
-		dead = true
+		is_dead = true
 		return "defeated"
 
 	return "damaged"
@@ -80,7 +99,7 @@ func update_parry(delta) -> void:
 		parry_timer = 0.0
 
 func _physics_process(delta: float) -> void:
-	if dead: 
+	if is_dead: 
 		return
 
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
@@ -88,26 +107,37 @@ func _physics_process(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
 		facing_direction = input_direction.normalized()
 
-	if Input.is_action_just_pressed("dash"):
-		try_dash(input_direction)
 
 	if Input.is_action_just_pressed("parry"):
 		if parry_cooldown_timer <= 0.0 && can_block:
 			animation_tree.set("parameters/goblin_block/blend_position", velocity.normalized())
 			is_parrying = true
 			parry_cooldown_timer = parry_cooldown
-		else:
-			print("Parry is on cooldown: %.2f seconds remaining" % parry_cooldown_timer)
+	elif (
+		Input.is_action_just_pressed("dash")
+		and not is_dashing
+	):
+		try_dash(input_direction)
+	elif (
+		Input.is_action_just_pressed("banana")
+		and not is_dashing
+		and not is_parrying
+	):
+		if banana_spawn_cooldown_timer <= 0.0:
+			throw_banana()
+			banana_spawn_cooldown_timer = banana_spawn_cooldown
 
+	# Always update parry cooldown timer
 	parry_cooldown_timer = max(0.0, parry_cooldown_timer - delta)
-
+	
+	# Always update banana spawn cooldown timer
+	banana_spawn_cooldown_timer = max(0.0, banana_spawn_cooldown_timer - delta)
+	
 	if is_parrying:
 		update_parry(delta)
-
-	if is_dashing:
+	elif is_dashing:
 		velocity = dash_direction * dash_speed
 	else:
-		# Separates target from current velocity to allow acceleration and deceleration
 		var target_velocity: Vector2 = input_direction * MAX_SPEED
 
 		if input_direction != Vector2.ZERO:
@@ -123,3 +153,4 @@ func _physics_process(delta: float) -> void:
 			)
 
 	move_and_slide()
+

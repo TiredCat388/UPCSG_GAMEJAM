@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bu3hyhaaugnhu"]
 
-[ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/PlayerMovement.gd" id="1_afppm"]
+[ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/Player.gd" id="1_afppm"]
 [ext_resource type="Texture2D" uid="uid://d0uk61jl4pyrk" path="res://assets/characters/player_goblin.png" id="2_afppm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1xdv"]
 
-[sub_resource type="Animation" id="Animation_rqwkw"]
+[sub_resource type="Animation" id="Animation_24gqh"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -20,9 +20,9 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_30dhn"]
-resource_name = "goblin_idle"
-length = 0.80000335
+[sub_resource type="Animation" id="Animation_xq0cc"]
+resource_name = "goblin_block_down"
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,12 +34,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [1, 2, 3, 4]
+"values": [18, 19, 20, 21]
 }
 
-[sub_resource type="Animation" id="Animation_ppr6r"]
-resource_name = "goblin_run_down"
-length = 0.80000335
+[sub_resource type="Animation" id="Animation_rafx0"]
+resource_name = "goblin_block_left"
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -48,15 +48,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [72, 73, 74, 75]
+"values": [6, 7, 8, 9]
 }
 
-[sub_resource type="Animation" id="Animation_n1xdv"]
-resource_name = "goblin_run_left"
-length = 1.0000033
+[sub_resource type="Animation" id="Animation_boxie"]
+resource_name = "goblin_block_right"
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -65,15 +65,79 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6, 0.8),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27]
+}
+
+[sub_resource type="Animation" id="Animation_sdcm4"]
+resource_name = "goblin_block_up"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_yjynp"]
+resource_name = "goblin_idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_h683u"]
+resource_name = "goblin_walk_down"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [72, 73, 74, 75, 76]
+}
+
+[sub_resource type="Animation" id="Animation_j1g85"]
+resource_name = "goblin_walk_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [84, 85, 86, 87, 88]
 }
 
-[sub_resource type="Animation" id="Animation_afppm"]
-resource_name = "goblin_run_right"
-length = 1.0000033
+[sub_resource type="Animation" id="Animation_7jddb"]
+resource_name = "goblin_walk_right"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -82,15 +146,14 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6, 0.8),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [78, 79, 80, 81, 82]
 }
 
-[sub_resource type="Animation" id="Animation_hgjck"]
-resource_name = "goblin_run_up"
-length = 0.80000335
+[sub_resource type="Animation" id="Animation_lfoco"]
+resource_name = "goblin_walk_up"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -99,36 +162,68 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [66, 67, 68, 69]
+"values": [66, 67, 68, 69, 70]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hgjck"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1g85"]
 _data = {
-&"RESET": SubResource("Animation_rqwkw"),
-&"goblin_idle": SubResource("Animation_30dhn"),
-&"goblin_run_down": SubResource("Animation_ppr6r"),
-&"goblin_run_left": SubResource("Animation_n1xdv"),
-&"goblin_run_right": SubResource("Animation_afppm"),
-&"goblin_run_up": SubResource("Animation_hgjck")
+&"RESET": SubResource("Animation_24gqh"),
+&"goblin_block_down": SubResource("Animation_xq0cc"),
+&"goblin_block_left": SubResource("Animation_rafx0"),
+&"goblin_block_right": SubResource("Animation_boxie"),
+&"goblin_block_up": SubResource("Animation_sdcm4"),
+&"goblin_idle": SubResource("Animation_yjynp"),
+&"goblin_walk_down": SubResource("Animation_h683u"),
+&"goblin_walk_left": SubResource("Animation_j1g85"),
+&"goblin_walk_right": SubResource("Animation_7jddb"),
+&"goblin_walk_up": SubResource("Animation_lfoco")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jh8vs"]
+animation = &"goblin_block_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rfitb"]
+animation = &"goblin_block_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_37p5y"]
+animation = &"goblin_block_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vty87"]
+animation = &"goblin_block_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_24gqh"]
+animation = &"goblin_block_down"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_deer0"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_jh8vs")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_rfitb")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_37p5y")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_vty87")
+blend_point_3/pos = Vector2(0, 1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_24gqh")
+blend_point_4/pos = Vector2(0, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_afppm"]
 animation = &"goblin_idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n1xdv"]
-animation = &"goblin_run_up"
+animation = &"goblin_walk_up"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_30dhn"]
-animation = &"goblin_run_left"
+animation = &"goblin_walk_left"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rqwkw"]
-animation = &"goblin_run_right"
+animation = &"goblin_walk_right"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hgjck"]
-animation = &"goblin_run_down"
+animation = &"goblin_walk_down"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ppr6r"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_n1xdv")
@@ -152,40 +247,60 @@ advance_expression = "velocity"
 advance_mode = 2
 advance_expression = "!velocity"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gpcb7"]
+advance_mode = 2
+advance_expression = "is_parrying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_24gqh"]
+advance_mode = 2
+advance_expression = "is_parrying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yjynp"]
+advance_mode = 2
+advance_expression = "!is_parrying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j1g85"]
+advance_mode = 2
+advance_expression = "!is_parrying"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ppr6r"]
+states/goblin_block/node = SubResource("AnimationNodeBlendSpace2D_deer0")
+states/goblin_block/position = Vector2(636, 174)
 states/goblin_idle/node = SubResource("AnimationNodeAnimation_afppm")
 states/goblin_idle/position = Vector2(387, 69)
 states/goblin_movement/node = SubResource("AnimationNodeBlendSpace2D_ppr6r")
-states/goblin_movement/position = Vector2(601, 69)
-transitions = ["Start", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_rx1o7"), "goblin_idle", "goblin_movement", SubResource("AnimationNodeStateMachineTransition_rqk8h"), "goblin_movement", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_20ow7")]
+states/goblin_movement/position = Vector2(614, 69)
+transitions = ["Start", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_rx1o7"), "goblin_idle", "goblin_movement", SubResource("AnimationNodeStateMachineTransition_rqk8h"), "goblin_movement", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_20ow7"), "goblin_movement", "goblin_block", SubResource("AnimationNodeStateMachineTransition_gpcb7"), "goblin_idle", "goblin_block", SubResource("AnimationNodeStateMachineTransition_24gqh"), "goblin_block", "goblin_movement", SubResource("AnimationNodeStateMachineTransition_yjynp"), "goblin_block", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_j1g85")]
 
-[node name="Player" type="CharacterBody2D" unique_id=1935441600 node_paths=PackedStringArray("animation_tree") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=881109633 node_paths=PackedStringArray("animation_tree") groups=["player"]]
 z_index = 50
+collision_mask = 7
 script = ExtResource("1_afppm")
 MAX_SPEED = 100.0
-animation_tree = NodePath("AnimationTree")
 dash_speed = 250.0
+animation_tree = NodePath("AnimationTree")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1616260819]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=107362491]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_afppm")
 hframes = 6
 vframes = 15
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1761826739]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=751904568]
 shape = SubResource("CapsuleShape2D_n1xdv")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=107095581]
-libraries/ = SubResource("AnimationLibrary_hgjck")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=73525360]
+libraries/ = SubResource("AnimationLibrary_j1g85")
 
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1793524734]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1102354924]
 tree_root = SubResource("AnimationNodeStateMachine_ppr6r")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/goblin_movement/blend_position = Vector2(0.18660283, 0.10313904)
+parameters/goblin_block/blend_position = Vector2(-0.083798885, 0.24170613)
+parameters/goblin_movement/blend_position = Vector2(-0.87869114, 0.3270142)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1638717287]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=857949556]
 zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true

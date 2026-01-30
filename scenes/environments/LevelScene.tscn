@@ -1,12 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://caaetkd35xve4"]
+[gd_scene format=3 uid="uid://caaetkd35xve4"]
 
 [ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="1_frnyd"]
-[ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/MainCharacter.tscn" id="2_athml"]
+[ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="2_athml"]
+[ext_resource type="PackedScene" uid="uid://dihfatvlxxrbs" path="res://scenes/entities/Warning.tscn" id="3_m1ec6"]
 
 [node name="LevelScene" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_frnyd")]
-position = Vector2(271, 308)
+[node name="Warning" parent="." groups=["warning"] instance=ExtResource("3_m1ec6")]
+z_index = 51
+position = Vector2(322, 256)
+scale = Vector2(0.03, 0.03)
 
-[node name="MainCharacter" parent="." instance=ExtResource("2_athml")]
-position = Vector2(800, 312)
+[node name="MainCharacter" parent="." groups=["hero"] instance=ExtResource("2_athml")]
+position = Vector2(652, 304)
+fight_type = 2
+
+[node name="Player" parent="." instance=ExtResource("1_frnyd")]
+position = Vector2(288, 306)

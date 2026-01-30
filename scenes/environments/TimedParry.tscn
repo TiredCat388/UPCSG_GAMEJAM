@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dvwixq3icij0x"]
+
+[ext_resource type="PackedScene" uid="uid://dihfatvlxxrbs" path="res://scenes/entities/Warning.tscn" id="1_uphm2"]
+[ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="2_5485p"]
+[ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="3_8o1cs"]
+[ext_resource type="PackedScene" uid="uid://r6er4618x43y" path="res://scenes/attacks/Banana.tscn" id="4_5485p"]
+
+[node name="LevelScene" type="Node2D" unique_id=1308449424]
+
+[node name="Warning" parent="." unique_id=959817101 groups=["warning"] instance=ExtResource("1_uphm2")]
+z_index = 51
+position = Vector2(322, 256)
+scale = Vector2(0.03, 0.03)
+
+[node name="Player" parent="." unique_id=23652815 instance=ExtResource("3_8o1cs")]
+position = Vector2(288, 306)
+collision_mask = 2
+
+[node name="Hero" parent="." unique_id=938446975 groups=["hero"] instance=ExtResource("2_5485p")]
+position = Vector2(497, 311)
+fight_phase = 2
+charge_attack_damage = 0.0
+
+[node name="Banana" parent="." unique_id=1480045529 instance=ExtResource("4_5485p")]
+position = Vector2(-2, -2)
+collision_layer = 0
+
+[node name="Banana2" parent="." unique_id=1273827380 instance=ExtResource("4_5485p")]
+collision_layer = 0
+
+[node name="Banana3" parent="." unique_id=679801868 instance=ExtResource("4_5485p")]
+collision_layer = 0
+
+[node name="Banana4" parent="." unique_id=958659343 instance=ExtResource("4_5485p")]
+collision_layer = 0
+
+[node name="Banana5" parent="." unique_id=1893443441 instance=ExtResource("4_5485p")]
+collision_layer = 0

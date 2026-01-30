@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal dialogue_finished
+
 # --- CONFIGURATION ---
 const JSON_PATH = "res://resources/json/dialogue_data.json"
 

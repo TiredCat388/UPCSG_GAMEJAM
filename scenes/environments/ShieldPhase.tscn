@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bmmcx6146115c"]
+
+[ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="2_sbydk"]
+[ext_resource type="PackedScene" uid="uid://r6x073sd3s8k" path="res://scenes/entities/Obstacle.tscn" id="3_7675d"]
+[ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="3_chq76"]
+
+[node name="LevelScene" type="Node2D" unique_id=1588697266]
+
+[node name="MainCharacter" parent="." unique_id=1886344260 groups=["hero"] instance=ExtResource("2_sbydk")]
+position = Vector2(504, 309)
+
+[node name="Player" parent="." unique_id=862390549 instance=ExtResource("3_chq76")]
+position = Vector2(288, 306)
+
+[node name="Obstacle" parent="." unique_id=272337787 groups=["obstacle"] instance=ExtResource("3_7675d")]
+position = Vector2(224, 303)
+
+[node name="Obstacle2" parent="." unique_id=1432444849 groups=["obstacle"] instance=ExtResource("3_7675d")]
+position = Vector2(128, 245)
+
+[node name="Obstacle3" parent="." unique_id=731541525 groups=["obstacle"] instance=ExtResource("3_7675d")]
+position = Vector2(111, 394)
+
+[node name="Obstacle4" parent="." unique_id=1215669488 groups=["obstacle"] instance=ExtResource("3_7675d")]
+position = Vector2(252, 175)
+
+[node name="Obstacle5" parent="." unique_id=285646577 groups=["obstacle"] instance=ExtResource("3_7675d")]
+position = Vector2(266, 420)

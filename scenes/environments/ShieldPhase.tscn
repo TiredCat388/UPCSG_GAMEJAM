@@ -8,7 +8,6 @@
 
 [node name="MainCharacter" parent="." unique_id=1886344260 groups=["hero"] instance=ExtResource("2_sbydk")]
 position = Vector2(504, 309)
-fight_type = 1
 
 [node name="Player" parent="." unique_id=862390549 instance=ExtResource("3_chq76")]
 position = Vector2(288, 306)

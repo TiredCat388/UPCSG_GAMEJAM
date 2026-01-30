@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="UPCSG_GAMEJAM"
 run/main_scene="uid://caaetkd35xve4"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://assets/icon.svg"
 
 [display]
@@ -63,13 +63,13 @@ interact={
 ]
 }
 
-[physics]
-
-common/physics_interpolation=true
-
 [layer_names]
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="enemy_body"
 2d_physics/layer_3="enemy_bullet"
 2d_physics/layer_4="enemy_shield"
+
+[physics]
+
+common/physics_interpolation=true

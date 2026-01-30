@@ -4,10 +4,12 @@ extends CharacterBody2D
 @export var ACCELERATION: float = 1600.0
 @export var DECELERATION: float = 2000.0
 @export var animation_tree: AnimationTree
-
 var facing_direction: Vector2 = Vector2.RIGHT
 
-#region PlayerDash
+@export var health: float = 100.0
+var dead: bool = false
+
+#region Player dash
 @export var dash_speed: float = 800.0
 @export var dash_duration: float = 0.2
 @export var dash_cooldown: float = 0.5
@@ -44,6 +46,9 @@ func try_dash(input_direction: Vector2) -> void:
 #endregion
 
 func _physics_process(delta: float) -> void:
+	if dead: 
+		return
+
 	# Normalizes player input to handle diagonal movement properly
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	animation_tree.set("parameters/goblin_movement/blend_position", velocity.normalized())
@@ -73,5 +78,9 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-func get_normal():
-	return facing_direction
+func take_damage(amount: float):
+	health -= amount
+	print("Player Health: %d" % health)
+	if health <= 0:
+		print("Player defeated!")
+		dead = true

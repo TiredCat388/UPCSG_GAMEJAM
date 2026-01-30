@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://bu3hyhaaugnhu"]
+[gd_scene load_steps=0 format=3 uid="uid://bu3hyhaaugnhu"]
 
-[ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/PlayerMovement.gd" id="1_afppm"]
+[ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/Player.gd" id="1_afppm"]
 [ext_resource type="Texture2D" uid="uid://d0uk61jl4pyrk" path="res://assets/characters/player_goblin.png" id="2_afppm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1xdv"]

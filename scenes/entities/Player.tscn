@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bu3hyhaaugnhu"]
+[gd_scene load_steps=15 format=3 uid="uid://bu3hyhaaugnhu"]
 
 [ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/Player.gd" id="1_afppm"]
+[ext_resource type="PackedScene" uid="uid://cak2yot5p3mmj" path="res://scenes/entities/Shield.tscn" id="2_24gqh"]
 [ext_resource type="Texture2D" uid="uid://d0uk61jl4pyrk" path="res://assets/characters/player_goblin.png" id="2_afppm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n1xdv"]
@@ -55,6 +56,11 @@ script = ExtResource("1_afppm")
 MAX_SPEED = 100.0
 animation_tree = NodePath("AnimationTree")
 dash_speed = 250.0
+
+[node name="Shield" parent="." instance=ExtResource("2_24gqh")]
+z_index = 51
+position = Vector2(4.75, 4.25)
+scale = Vector2(0.0061999997, 0.0066)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

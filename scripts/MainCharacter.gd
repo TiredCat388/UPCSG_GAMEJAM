@@ -17,7 +17,7 @@ var dead: bool = false
 
 # Stun variables
 var stunned: bool = false
-@export var stun_time: float = 1
+@export var stun_time: float = 1.5
 
 #region Shield bash
 @export var shield_speed: float = 75.0
@@ -33,6 +33,7 @@ var bash_timer: float = 0.0
 var bash_cooldown_timer: float = 0.0
 var _bash_dir: Vector2 = Vector2.ZERO
 var _current_bash_speed: float = 0.0
+var bash_damage: float = 20.0
 
 func start_shield_bash():
 	if is_bashing or bash_cooldown_timer > 0.0:
@@ -59,7 +60,7 @@ func update_shield_bash(delta):
 			if collider.is_in_group("player"):
 				end_shield_bash(collider)
 			elif collider.is_in_group("obstacle"):
-				on_obstacle_collision()
+				on_obstacle_collision(collider)
 				collider.queue_free()
 			
 	if bash_timer >= bash_duration:
@@ -71,7 +72,7 @@ func end_shield_bash(collider):
 	bash_cooldown_timer = bash_cooldown
 
 	if collider and collider.is_in_group("player"):
-		collider.take_damage(20)  
+		collider.take_damage(bash_damage)  
 
 #endregion
 
@@ -106,8 +107,8 @@ func stop_and_attack():
 	bullet_hell_spawner.bullet_hell()
 #endregion
 
-#region Timed parry 
-@export var parry_speed: float = 100.0
+#region Timed parry
+@export var parry_stage_speed: float = 130.0
 @export var charge_speed: float = 1200.0
 @export var charge_acceleration: float = 2000.0
 @export var charge_duration: float = 0.5
@@ -121,6 +122,7 @@ var charge_timer: float = 0.0
 var charge_cooldown_timer: float = 0.0
 var _charge_dir: Vector2 = Vector2.ZERO
 var _current_charge_speed: float = 0.0
+var charge_damage: float = 30.0
 var paused: bool = false
 
 func start_charge():
@@ -148,7 +150,7 @@ func update_charge(delta):
 			if collider.is_in_group("player"):
 				end_charge(collider)
 			elif collider.is_in_group("obstacle"):
-				on_obstacle_collision()
+				on_obstacle_collision(collider)
 				collider.queue_free()
 			
 	if charge_timer >= charge_duration:
@@ -160,8 +162,13 @@ func end_charge(collider):
 	charge_cooldown_timer = charge_cooldown
 
 	if collider and collider.is_in_group("player"):
-		collider.take_damage(0)  
-
+		var res: String = collider.take_damage(charge_damage)
+		if res == "parried":
+			stunned = true
+			velocity = Vector2.ZERO
+			await get_tree().create_timer(stun_time).timeout
+			stunned = false
+		
 func pause():
 	paused = true
 	velocity = Vector2.ZERO
@@ -183,16 +190,17 @@ func _ready():
 
 	match fight_type:
 		FightType.BULLET_HELL:
+			speed = bullet_hell_speed
 			pick_new_target() 
 			show()
 			
 		FightType.SHIELD:
-			speed = 75
+			speed = shield_speed
 			assert(player, "Cannot find Player! Make sure Player is in the 'player' group.")
 			shield.show()
 
 		FightType.PARRY:
-			speed = 120
+			speed = parry_stage_speed
 
 func _physics_process(delta):
 	if dead or stunned:
@@ -275,9 +283,9 @@ func check_slide_collisions():
 		if collision and collider.is_in_group("obstacle") and not seen.has(collider):
 			seen.append(collider)
 			collider.queue_free()
-			on_obstacle_collision()
+			on_obstacle_collision(collider)
 
-func on_obstacle_collision():
+func on_obstacle_collision(collider):
 	stunned = true
 	is_bashing = false
 
@@ -286,7 +294,7 @@ func on_obstacle_collision():
 
 	shield.hide()
 
-	take_damage(40)
+	take_damage(collider.inflicted_damage)
 	await get_tree().create_timer(stun_time).timeout
 	stunned = false
 

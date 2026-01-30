@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
+
 # Fight types
 enum FightType {BULLET_HELL, SHIELD, PARRY}
 @export var fight_type: FightType = FightType.BULLET_HELL
+
 
 # References to other nodes
 var player: Node2D = null
@@ -10,14 +12,17 @@ var warning: Node2D = null
 @onready var bullet_hell_spawner := $BulletHellSpawner 
 @onready var shield := $Shield
 
+
 # General variables
 @export var speed: float = 100.0
 @export var health: float = 100.0
 var dead: bool = false
 
+
 # Stun variables
 var stunned: bool = false
 @export var stun_time: float = 1.5
+
 
 #region Shield bash
 @export var shield_speed: float = 75.0
@@ -27,6 +32,7 @@ var stunned: bool = false
 @export var bash_cooldown: float = 1.0
 @export var bash_trigger_distance: float = 120.0
 
+
 var _bash_start_position: Vector2 = Vector2.ZERO
 var is_bashing: bool = false
 var bash_timer: float = 0.0
@@ -34,6 +40,7 @@ var bash_cooldown_timer: float = 0.0
 var _bash_dir: Vector2 = Vector2.ZERO
 var _current_bash_speed: float = 0.0
 var bash_damage: float = 20.0
+
 
 func start_shield_bash():
 	if is_bashing or bash_cooldown_timer > 0.0:
@@ -44,6 +51,7 @@ func start_shield_bash():
 	_current_bash_speed = min(bash_speed * 0.5, bash_speed)
 	velocity = _bash_dir * _current_bash_speed
 	_bash_start_position = global_position
+
 
 func update_shield_bash(delta):
 	bash_timer += delta
@@ -67,14 +75,15 @@ func update_shield_bash(delta):
 		end_shield_bash(null)
 		return
 
+
 func end_shield_bash(collider):
 	is_bashing = false
 	bash_cooldown_timer = bash_cooldown
 
 	if collider and collider.is_in_group("player"):
 		collider.take_damage(bash_damage)  
-
 #endregion
+
 
 #region Bullet hell
 @export var bullet_hell_speed: float = 100.0
@@ -86,12 +95,14 @@ var target_position: Vector2
 var stopping: bool = false
 var stop_timer: float = 0.0
 
+
 func pick_new_target():
 	var rect = get_viewport().get_visible_rect()
 	target_position = Vector2(
 		randf_range(rect.position.x + map_edge_padding, rect.position.x + rect.size.x - map_edge_padding),
 		randf_range(rect.position.y + map_edge_padding, rect.position.y + rect.size.y - map_edge_padding)
 	)
+
 
 func move_towards_target_random(_delta):
 	var dir = (target_position - global_position).normalized()
@@ -100,12 +111,14 @@ func move_towards_target_random(_delta):
 	if global_position.distance_to(target_position) < target_distance_threshold:
 		stop_and_attack()
 
+
 func stop_and_attack():
 	stopping = true
 	velocity = Vector2.ZERO
 	move_and_slide()
 	bullet_hell_spawner.bullet_hell()
 #endregion
+
 
 #region Timed parry
 @export var parry_stage_speed: float = 130.0
@@ -116,6 +129,7 @@ func stop_and_attack():
 @export var charge_trigger_distance: float = 200.0
 @export var pause_duration: float = 0.5
 
+
 var _charge_start_position: Vector2 = Vector2.ZERO
 var is_charging: bool = false
 var charge_timer: float = 0.0
@@ -124,6 +138,7 @@ var _charge_dir: Vector2 = Vector2.ZERO
 var _current_charge_speed: float = 0.0
 var charge_damage: float = 30.0
 var paused: bool = false
+
 
 func start_charge():
 	if is_charging or charge_cooldown_timer > 0.0:
@@ -134,6 +149,7 @@ func start_charge():
 	_current_charge_speed = min(charge_speed * 0.5, charge_speed)
 	velocity = _charge_dir * _current_charge_speed
 	_charge_start_position = global_position
+
 
 func update_charge(delta):
 	charge_timer += delta
@@ -157,6 +173,7 @@ func update_charge(delta):
 		end_charge(null)
 		return
 
+
 func end_charge(collider):
 	is_charging = false
 	charge_cooldown_timer = charge_cooldown
@@ -168,14 +185,15 @@ func end_charge(collider):
 			velocity = Vector2.ZERO
 			await get_tree().create_timer(stun_time).timeout
 			stunned = false
-		
+
+
 func pause():
 	paused = true
 	velocity = Vector2.ZERO
 	await get_tree().create_timer(pause_duration).timeout
 	paused = false
-
 #endregion
+
 
 func _ready():
 	# Find the player to follow
@@ -201,6 +219,7 @@ func _ready():
 
 		FightType.PARRY:
 			speed = parry_stage_speed
+
 
 func _physics_process(delta):
 	if dead or stunned:
@@ -274,6 +293,7 @@ func _physics_process(delta):
 					move_and_slide()
 					check_slide_collisions()
 
+
 #region Collision methods
 func check_slide_collisions():
 	var seen := []
@@ -284,6 +304,7 @@ func check_slide_collisions():
 			seen.append(collider)
 			collider.queue_free()
 			on_obstacle_collision(collider)
+
 
 func on_obstacle_collision(collider):
 	stunned = true
@@ -300,6 +321,7 @@ func on_obstacle_collision(collider):
 
 	shield.show()
 #endregion
+
 
 func take_damage(amount: float):
 	health -= amount

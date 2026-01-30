@@ -1,9 +1,12 @@
 extends Sprite2D
 
+
 var player: Node2D = null
 var hero: Node2D = null
 
+
 @export var warning_distance: float = 50.0
+
 
 func _ready() -> void:
 	if get_tree().get_first_node_in_group("player"):
@@ -11,6 +14,7 @@ func _ready() -> void:
 
 	if get_tree().get_first_node_in_group("hero"):
 		hero = get_tree().get_first_node_in_group("hero")
+
 
 func _process(_delta: float) -> void:
 	if not player or not hero: 

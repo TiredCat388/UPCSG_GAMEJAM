@@ -1,6 +1,8 @@
 extends StaticBody2D
 
+
 @export var inflicted_damage: float = 20.0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

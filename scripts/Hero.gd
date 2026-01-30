@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 
-# Fight types
+# Fight phases
 enum FightType {BULLET_HELL, SHIELD, PARRY}
-@export var fight_type: FightType = FightType.BULLET_HELL
+@export var fight_phase: FightType = FightType.BULLET_HELL
 
 
 # References to other nodes
@@ -16,21 +16,22 @@ var warning: Node2D = null
 # General variables
 @export var speed: float = 100.0
 @export var health: float = 100.0
-var dead: bool = false
+var is_dead: bool = false
 
 
 # Stun variables
-var stunned: bool = false
-@export var stun_time: float = 1.5
+var is_stunned: bool = false
+@export var stunned_duration: float = 1.5
 
 
 #region Shield bash
-@export var shield_speed: float = 75.0
-@export var bash_speed: float = 600.0
-@export var bash_acceleration: float = 1800.0
-@export var bash_duration: float = 0.25
-@export var bash_cooldown: float = 1.0
-@export var bash_trigger_distance: float = 120.0
+@export var shield_phase_speed: float = 75.0
+@export var shield_bash_speed: float = 600.0
+@export var shield_bash_acceleration: float = 1800.0
+@export var shield_bash_duration: float = 0.25
+@export var shield_bash_cooldown: float = 1.0
+@export var shield_bash_trigger_distance: float = 120.0
+@export var shield_bash_damage: float = 20.0
 
 
 var _bash_start_position: Vector2 = Vector2.ZERO
@@ -39,7 +40,17 @@ var bash_timer: float = 0.0
 var bash_cooldown_timer: float = 0.0
 var _bash_dir: Vector2 = Vector2.ZERO
 var _current_bash_speed: float = 0.0
-var bash_damage: float = 20.0
+
+
+func update_bash_cooldown(delta):
+	if bash_cooldown_timer > 0.0:
+		bash_cooldown_timer = max(0.0, bash_cooldown_timer - delta)
+
+
+func in_shield_bash_range() -> bool:
+	if not player:
+		return false
+	return global_position.distance_to(player.global_position) <= shield_bash_trigger_distance
 
 
 func start_shield_bash():
@@ -48,14 +59,14 @@ func start_shield_bash():
 	is_bashing = true
 	bash_timer = 0.0
 	_bash_dir = (player.global_position - global_position).normalized()
-	_current_bash_speed = min(bash_speed * 0.5, bash_speed)
+	_current_bash_speed = min(shield_bash_speed * 0.5, shield_bash_speed)
 	velocity = _bash_dir * _current_bash_speed
 	_bash_start_position = global_position
 
 
 func update_shield_bash(delta):
 	bash_timer += delta
-	_current_bash_speed = min(bash_speed, _current_bash_speed + bash_acceleration * delta)
+	_current_bash_speed = min(shield_bash_speed, _current_bash_speed + shield_bash_acceleration * delta)
 	velocity = _bash_dir * _current_bash_speed
 	move_and_slide()
 	
@@ -71,22 +82,22 @@ func update_shield_bash(delta):
 				on_obstacle_collision(collider)
 				collider.queue_free()
 			
-	if bash_timer >= bash_duration:
+	if bash_timer >= shield_bash_duration:
 		end_shield_bash(null)
 		return
 
 
 func end_shield_bash(collider):
 	is_bashing = false
-	bash_cooldown_timer = bash_cooldown
+	bash_cooldown_timer = shield_bash_cooldown
 
 	if collider and collider.is_in_group("player"):
-		collider.take_damage(bash_damage)  
+		collider.take_damage(shield_bash_damage)  
 #endregion
 
 
 #region Bullet hell
-@export var bullet_hell_speed: float = 100.0
+@export var bullet_hell_phase_speed: float = 100.0
 @export var stop_time_min: float = 1.0
 @export var stop_time_max: float = 3.0
 @export var target_distance_threshold: float = 10.0
@@ -121,13 +132,14 @@ func stop_and_attack():
 
 
 #region Timed parry
-@export var parry_stage_speed: float = 130.0
-@export var charge_speed: float = 1200.0
-@export var charge_acceleration: float = 2000.0
-@export var charge_duration: float = 0.5
-@export var charge_cooldown: float = 3.0
-@export var charge_trigger_distance: float = 200.0
-@export var pause_duration: float = 0.5
+@export var parry_phase_speed: float = 130.0
+@export var charge_attack_speed: float = 1200.0
+@export var charge_attack_acceleration: float = 2000.0
+@export var charge_attack_duration: float = 0.5
+@export var charge_attack_cooldown: float = 3.0
+@export var charge_attack_trigger_distance: float = 200.0
+@export var charge_windup_duration: float = 0.5
+@export var charge_attack_damage: float = 30.0
 
 
 var _charge_start_position: Vector2 = Vector2.ZERO
@@ -136,8 +148,12 @@ var charge_timer: float = 0.0
 var charge_cooldown_timer: float = 0.0
 var _charge_dir: Vector2 = Vector2.ZERO
 var _current_charge_speed: float = 0.0
-var charge_damage: float = 30.0
-var paused: bool = false
+var is_winding_up: bool = false
+
+
+func update_charge_cooldown(delta):
+	if charge_cooldown_timer > 0.0:
+		charge_cooldown_timer = max(0.0, charge_cooldown_timer - delta)
 
 
 func start_charge():
@@ -146,14 +162,14 @@ func start_charge():
 	is_charging = true
 	charge_timer = 0.0
 	_charge_dir = (player.global_position - global_position).normalized()
-	_current_charge_speed = min(charge_speed * 0.5, charge_speed)
+	_current_charge_speed = min(charge_attack_speed * 0.5, charge_attack_speed)
 	velocity = _charge_dir * _current_charge_speed
 	_charge_start_position = global_position
 
 
 func update_charge(delta):
 	charge_timer += delta
-	_current_charge_speed = min(charge_speed, _current_charge_speed + charge_acceleration * delta)
+	_current_charge_speed = min(charge_attack_speed, _current_charge_speed + charge_attack_acceleration * delta)
 	velocity = _charge_dir * _current_charge_speed
 	move_and_slide()
 	
@@ -169,30 +185,82 @@ func update_charge(delta):
 				on_obstacle_collision(collider)
 				collider.queue_free()
 			
-	if charge_timer >= charge_duration:
+	if charge_timer >= charge_attack_duration:
 		end_charge(null)
 		return
 
 
 func end_charge(collider):
 	is_charging = false
-	charge_cooldown_timer = charge_cooldown
+	charge_cooldown_timer = charge_attack_cooldown
 
 	if collider and collider.is_in_group("player"):
-		var res: String = collider.take_damage(charge_damage)
+		var res: String = collider.take_damage(charge_attack_damage)
 		if res == "parried":
-			stunned = true
+			is_stunned = true
 			velocity = Vector2.ZERO
-			await get_tree().create_timer(stun_time).timeout
-			stunned = false
+			await get_tree().create_timer(stunned_duration).timeout
+			is_stunned = false
 
 
 func pause():
-	paused = true
+	is_winding_up = true
 	velocity = Vector2.ZERO
-	await get_tree().create_timer(pause_duration).timeout
-	paused = false
+	await get_tree().create_timer(charge_windup_duration).timeout
+	is_winding_up = false
 #endregion
+
+
+#region Collisions
+func check_slide_collisions():
+	var seen := []
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collision and collider.is_in_group("obstacle") and not seen.has(collider):
+			seen.append(collider)
+			collider.queue_free()
+			on_obstacle_collision(collider)
+
+
+func on_obstacle_collision(collider):
+	is_stunned = true
+	is_bashing = false
+
+	bash_cooldown_timer = shield_bash_cooldown
+	velocity = Vector2.ZERO
+
+	shield.hide()
+
+	take_damage(collider.inflicted_damage)
+	await get_tree().create_timer(stunned_duration).timeout
+	is_stunned = false
+
+	shield.show()
+#endregion
+
+
+#region Slip
+@export var slip_recovery_duration: float = 0.5
+var is_slipping: bool = false
+
+func slip():
+	if not is_slipping:
+		is_slipping = true
+		is_winding_up = false
+		is_charging = false
+		is_stunned = false
+		take_damage(10)  
+		print("Hero slipped!")
+#endregion
+
+
+func take_damage(amount: float):
+	health -= amount
+	print("Hero Health: %d" % health)
+	if health <= 0:
+		print("Hero defeated!")
+		is_dead = true
 
 
 func _ready():
@@ -206,26 +274,26 @@ func _ready():
 		shield.hide()
 		warning.hide()
 
-	match fight_type:
+	match fight_phase:
 		FightType.BULLET_HELL:
-			speed = bullet_hell_speed
+			speed = bullet_hell_phase_speed
 			pick_new_target() 
 			show()
 			
 		FightType.SHIELD:
-			speed = shield_speed
+			speed = shield_phase_speed
 			assert(player, "Cannot find Player! Make sure Player is in the 'player' group.")
 			shield.show()
 
 		FightType.PARRY:
-			speed = parry_stage_speed
+			speed = parry_phase_speed
 
 
 func _physics_process(delta):
-	if dead or stunned:
+	if is_dead or is_stunned:
 		return
 
-	match fight_type:
+	match fight_phase:
 		FightType.BULLET_HELL:
 			if stopping:
 				if not bullet_hell_spawner.bullet_hell_is_on:
@@ -238,25 +306,25 @@ func _physics_process(delta):
 			if not player: 
 				return 
 
-			if bash_cooldown_timer > 0.0:
-				bash_cooldown_timer = max(0.0, bash_cooldown_timer - delta)
+			update_bash_cooldown(delta)
 
 			if is_bashing: 
 				update_shield_bash(delta)
 			else:
 				if (
 					bash_cooldown_timer <= 0.0 
-					and global_position.distance_to(player.global_position) <= bash_trigger_distance 
-					and not player.dead
+					and in_shield_bash_range() 
+					and not player.is_dead
 				):
 					start_shield_bash()
 				else:
 					var dir = (player.global_position - global_position).normalized()
 
-					if global_position.distance_to(player.global_position) < bash_trigger_distance:
+					if global_position.distance_to(player.global_position) < shield_bash_trigger_distance:
 						dir = (global_position - player.global_position).normalized()
 
 					velocity = dir * speed
+
 					move_and_slide()
 					check_slide_collisions()
 
@@ -265,19 +333,24 @@ func _physics_process(delta):
 				print( "No player or warning found" )
 				return 
 
-			if paused: 
+			update_charge_cooldown(delta)
+
+			if is_winding_up: 
 				return
-
-			if charge_cooldown_timer > 0.0:
-				charge_cooldown_timer = max(0.0, charge_cooldown_timer - delta)
-
-			if is_charging: 
+			elif is_charging: 
 				update_charge(delta)
+			elif is_slipping:
+				if velocity.length() > 10.0:
+					velocity = velocity.move_toward(Vector2.ZERO, speed * 2 * delta)
+					move_and_slide()
+				else:
+					await get_tree().create_timer(slip_recovery_duration).timeout
+					is_slipping = false
 			else:
 				if (
 					charge_cooldown_timer <= 0.0 
-					and global_position.distance_to(player.global_position) <= charge_trigger_distance 
-					and not player.dead
+					and global_position.distance_to(player.global_position) <= charge_attack_trigger_distance 
+					and not player.is_dead
 				):
 					warning.show()
 					await pause()
@@ -286,46 +359,9 @@ func _physics_process(delta):
 				else:
 					var dir = (player.global_position - global_position).normalized()
 
-					if global_position.distance_to(player.global_position) < charge_trigger_distance:
+					if global_position.distance_to(player.global_position) < charge_attack_trigger_distance:
 						dir = (global_position - player.global_position).normalized()
 
 					velocity = dir * speed
 					move_and_slide()
 					check_slide_collisions()
-
-
-#region Collision methods
-func check_slide_collisions():
-	var seen := []
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		if collision and collider.is_in_group("obstacle") and not seen.has(collider):
-			seen.append(collider)
-			collider.queue_free()
-			on_obstacle_collision(collider)
-
-
-func on_obstacle_collision(collider):
-	stunned = true
-	is_bashing = false
-
-	bash_cooldown_timer = bash_cooldown
-	velocity = Vector2.ZERO
-
-	shield.hide()
-
-	take_damage(collider.inflicted_damage)
-	await get_tree().create_timer(stun_time).timeout
-	stunned = false
-
-	shield.show()
-#endregion
-
-
-func take_damage(amount: float):
-	health -= amount
-	print("Main Character Health: %d" % health)
-	if health <= 0:
-		print("Main Character defeated!")
-		dead = true

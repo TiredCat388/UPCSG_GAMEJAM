@@ -29,6 +29,8 @@ window/stretch/scale_mode="integer"
 [global_group]
 
 player=""
+hero=""
+warning=""
 
 [input]
 

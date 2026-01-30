@@ -2,22 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="1_frnyd"]
 [ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/MainCharacter.tscn" id="2_athml"]
-[ext_resource type="PackedScene" uid="uid://r6x073sd3s8k" path="res://scenes/entities/Obstacle.tscn" id="3_m1ec6"]
+[ext_resource type="PackedScene" uid="uid://dihfatvlxxrbs" path="res://scenes/entities/Warning.tscn" id="3_m1ec6"]
 
 [node name="LevelScene" type="Node2D"]
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("1_frnyd")]
-position = Vector2(271, 308)
+[node name="Warning" parent="." groups=["warning"] instance=ExtResource("3_m1ec6")]
+z_index = 51
+position = Vector2(322, 256)
+scale = Vector2(0.03, 0.03)
 
-[node name="MainCharacter" parent="." instance=ExtResource("2_athml")]
-position = Vector2(800, 312)
-fight_type = 1
+[node name="MainCharacter" parent="." groups=["hero"] instance=ExtResource("2_athml")]
+position = Vector2(652, 304)
+fight_type = 2
 
-[node name="Obstacle" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
-position = Vector2(390, 205)
-
-[node name="Obstacle2" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
-position = Vector2(594, 257)
-
-[node name="Obstacle3" parent="." groups=["obstacle"] instance=ExtResource("3_m1ec6")]
-position = Vector2(462, 357)
+[node name="Player" parent="." instance=ExtResource("1_frnyd")]
+position = Vector2(288, 306)

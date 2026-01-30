@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/MainCharacter.gd" id="1_vk5kn"]
 [ext_resource type="Texture2D" uid="uid://bjd6q4o85hg8m" path="res://assets/icon.svg" id="2_pq4va"]
-[ext_resource type="PackedScene" uid="uid://cl7m44b67xy5o" path="res://scenes/attacks/SwordSlashProjectile.tscn" id="2_wx53h"]
 [ext_resource type="Script" uid="uid://doc3c4ubr2ye6" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
 [ext_resource type="Script" uid="uid://cqnkbmrjet5ia" path="res://scenes/entities/SwordSwinger.gd" id="6_hiuhk"]
@@ -13,10 +12,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mdl7e"]
 size = Vector2(64, 63)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_37ipj"]
+
 [node name="MainCharacter" type="CharacterBody2D" unique_id=516525854]
 z_index = 50
 script = ExtResource("1_vk5kn")
-projectile_scene = ExtResource("2_wx53h")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1137343325]
 position = Vector2(1, 0)
@@ -40,3 +40,9 @@ position = Vector2(-62, 23)
 script = ExtResource("8_37ipj")
 weapon_scene = ExtResource("9_ih5qh")
 target_scale = Vector2(1.6, 1.6)
+
+[node name="Area2D" type="Area2D" parent="FloatingWeaponSocket" unique_id=1965301266]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloatingWeaponSocket/Area2D" unique_id=1727616318]
+shape = SubResource("CircleShape2D_37ipj")
+debug_color = Color(0.8387928, 0.2730998, 0.6866861, 0.41960785)

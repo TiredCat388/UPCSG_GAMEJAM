@@ -1,5 +1,9 @@
 extends Node2D
 
+# TODO: 
+# - Design flaw, weapon movement logic should reside and be applied to the weapin itself. not the socket
+# - Refactor Second Attack Logic
+
 # =========================================================
 # EDITOR PROPERTIES
 # =========================================================
@@ -43,7 +47,7 @@ var initial_scale: Vector2
 # =========================================================
 # ATTACK STATES
 # =========================================================
-enum AttackState { NONE, FIRST, SECOND_SPIN, SECOND_THROW, SECOND_RETURN }
+enum AttackState { NONE, FIRST, SECOND_SPIN, SECOND_THROW, SECOND_RETURN, THIRD }
 var attack_state: AttackState = AttackState.NONE
 
 # First attack variables
@@ -87,6 +91,8 @@ func _process(delta: float) -> void:
 			_first_attack_process(delta)
 		AttackState.SECOND_SPIN, AttackState.SECOND_THROW, AttackState.SECOND_RETURN:
 			_second_attack_process(delta)
+		AttackState.THIRD:
+			_third_attack_process(delta)
 		AttackState.NONE:
 			_idle_process(delta)
 
@@ -131,6 +137,88 @@ func _first_attack_process(delta: float) -> void:
 
 	print("FIRST ATTACK ROT:", weapon_instance.rotation)
 
+# =========================================================
+# THIRD ATTACK
+# =========================================================
+var third_attack_duration: float = 0.0
+var third_attack_progress: float = 0.0
+var start_rot_at: float = 0.01
+var start_trans_at: float = 0.2
+var end_rot_at: float = 0.4
+var end_trans_at: float = 0.99
+var trans_dist: float = 200
+var third_attack_direction: Vector2 = Vector2.ZERO
+var third_attack_offset: Vector2 = Vector2.ZERO  # relative to parent at start
+
+func third_attack(duration: float, direction: Vector2) -> void:
+	if weapon_instance == null:
+		return
+	
+	third_attack_progress = 0.0
+	third_attack_duration = duration
+	third_attack_direction = direction.normalized()
+	third_attack_offset = global_position - get_parent().global_position
+
+	# Dash the parent first (optional)
+	if (third_attack_duration > 0.2):
+		get_parent().dash_and_stop()
+		weapon_instance.scale = initial_scale * 3
+		
+	attack_state = AttackState.THIRD
+
+func _third_attack_process(delta: float) -> void:
+	if third_attack_progress >= third_attack_duration:
+		# When attack ends, accumulate final offset so container sticks
+		third_attack_offset += third_attack_direction * trans_dist
+		_end_attack()
+		return
+
+	# Update progress
+	third_attack_progress += delta
+	var t: float = third_attack_progress / third_attack_duration
+
+	# Determine rotation sign based on direction.x
+	var rotation_sign: float = 1.0
+	if third_attack_direction.x < 0:
+		rotation_sign = -1.0
+
+	# Rotate the weapon itself
+	weapon_instance.rotation = rotation_sign * deg_to_rad(third_attack_rotation(t)) + initial_rotation
+
+	# Compute offset along attack direction
+	var offset_distance: float
+	if t < start_trans_at:
+		offset_distance = 0.0
+	elif t > end_trans_at:
+		offset_distance = trans_dist
+	else:
+		var normalized: float = (t - start_trans_at) / (end_trans_at - start_trans_at)
+		offset_distance = piecewise_rotate(normalized) / 90.0 * trans_dist
+
+	# Apply translation **relative to parent** + base offset
+	# self.global_position = get_parent().global_position + third_attack_offset + third_attack_direction * offset_distance
+
+
+func third_attack_rotation(t: float) -> float:
+	if t < start_rot_at:
+		return 0.0
+	elif t > end_rot_at:
+		return 90.0
+	else:
+		var normalized: float = (t - start_rot_at) / (end_rot_at - start_rot_at)
+		return piecewise_rotate(normalized)
+
+func piecewise_rotate(input_val: float) -> float:
+	if input_val < 0:
+		return -90
+	elif input_val < 1:
+		return lerp(-90, 0, input_val)
+	elif input_val < 2:
+		return lerp(0, 90, input_val - 1)
+	else:
+		return 90
+
+
 func _end_attack() -> void:
 	attack_state = AttackState.NONE
 	attack_angle = 0.0
@@ -159,7 +247,6 @@ func _second_attack_process(delta: float) -> void:
 			_second_throw_process(delta)
 		AttackState.SECOND_RETURN:
 			_second_return_process(delta)
-
 
 func _second_spin_process(delta: float) -> void:
 	var total_angle: float = TAU * float(second_spin_revolutions - 1)

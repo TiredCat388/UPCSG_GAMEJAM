@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
+
 @onready var shield := $Shield
+
 
 @export var MAX_SPEED: float = 400.0
 @export var ACCELERATION: float = 1600.0
@@ -8,8 +10,10 @@ extends CharacterBody2D
 @export var animation_tree: AnimationTree
 var facing_direction: Vector2 = Vector2.RIGHT
 
+
 @export var health: float = 100.0
 var dead: bool = false
+
 
 #region Player dash
 @export var dash_speed: float = 800.0
@@ -20,9 +24,9 @@ var is_dashing: bool = false
 var can_dash: bool = true
 var dash_direction: Vector2 = Vector2.ZERO
 
-@export var parry_frame_window: int = 15
+@export var parry_duration: float = 0.5
+var parry_timer: float = 0.0																																	
 var is_parrying: bool = false
-var parry_frame_count: int = 0
 var parry_cooldown_timer: float = 0.0
 var parry_cooldown: float = 1
 
@@ -36,28 +40,6 @@ func _start_dash() -> void:
 	await get_tree().create_timer(dash_cooldown).timeout
 	
 	can_dash = true
-
-func take_damage(amount: float) -> String:
-	if is_parrying:
-		print("Parried the attack!")
-		return "parried"
-
-	health -= amount
-	print("Player Health: %d" % health)
-
-	if health <= 0:
-		print("Player defeated!")
-		dead = true
-		return "defeated"
-
-	return "damaged"
-
-func update_parry() -> void:
-	parry_frame_count += 1
-	if parry_frame_count >= parry_frame_window:
-		is_parrying = false
-		parry_frame_count = 0
-		shield.hide()
 
 func try_dash(input_direction: Vector2) -> void:
 	# Prevents dashing while on cooldown or while currently dashing
@@ -74,9 +56,35 @@ func try_dash(input_direction: Vector2) -> void:
 	_start_dash()
 #endregion
 
+
+func take_damage(amount: float) -> String:
+	if is_parrying:
+		print("Parried the attack!")
+		return "parried"
+
+	health -= amount
+	print("Player Health: %d" % health)
+
+	if health <= 0:
+		print("Player defeated!")
+		dead = true
+		return "defeated"
+
+	return "damaged"
+
+
+func update_parry(delta) -> void:
+	parry_timer += delta
+	if parry_timer >= parry_duration:
+		is_parrying = false
+		parry_timer = 0.0
+		shield.hide()
+
+
 func _ready() -> void:
 	if shield: 
 		shield.hide()
+
 
 func _physics_process(delta: float) -> void:
 	if dead: 
@@ -102,7 +110,7 @@ func _physics_process(delta: float) -> void:
 	parry_cooldown_timer = max(0.0, parry_cooldown_timer - delta)
 
 	if is_parrying:
-		update_parry()
+		update_parry(delta)
 
 	if is_dashing:
 		velocity = dash_direction * dash_speed

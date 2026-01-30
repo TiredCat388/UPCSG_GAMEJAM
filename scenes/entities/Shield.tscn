@@ -1,15 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cak2yot5p3mmj"]
+[gd_scene load_steps=2 format=3 uid="uid://cak2yot5p3mmj"]
 
 [ext_resource type="Texture2D" uid="uid://ch8dbjexlwil2" path="res://assets/shield.png" id="1_3dyab"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tv5um"]
-
-[node name="Shield" type="StaticBody2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.025, 0.025)
+[node name="Shield" type="Sprite2D"]
+scale = Vector2(0.02, 0.02)
 texture = ExtResource("1_3dyab")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(2, 2)
-shape = SubResource("RectangleShape2D_tv5um")

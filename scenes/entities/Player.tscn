@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bu3hyhaaugnhu"]
+[gd_scene format=3 uid="uid://bu3hyhaaugnhu"]
 
 [ext_resource type="Script" uid="uid://dc5fb6xsw7f8e" path="res://scripts/Player.gd" id="1_afppm"]
 [ext_resource type="PackedScene" uid="uid://cak2yot5p3mmj" path="res://scenes/entities/Shield.tscn" id="2_24gqh"]
@@ -50,37 +50,38 @@ states/goblin_movement/node = SubResource("AnimationNodeBlendSpace2D_ppr6r")
 states/goblin_movement/position = Vector2(601, 69)
 transitions = ["Start", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_rx1o7"), "goblin_idle", "goblin_movement", SubResource("AnimationNodeStateMachineTransition_rqk8h"), "goblin_movement", "goblin_idle", SubResource("AnimationNodeStateMachineTransition_20ow7")]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_tree") groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=603712082 node_paths=PackedStringArray("animation_tree") groups=["player"]]
 z_index = 50
+collision_mask = 7
 script = ExtResource("1_afppm")
 MAX_SPEED = 100.0
-animation_tree = NodePath("AnimationTree")
 dash_speed = 250.0
+animation_tree = NodePath("AnimationTree")
 
-[node name="Shield" parent="." instance=ExtResource("2_24gqh")]
+[node name="Shield" parent="." unique_id=276974007 instance=ExtResource("2_24gqh")]
 z_index = 51
 position = Vector2(4.75, 4.25)
 scale = Vector2(0.0061999997, 0.0066)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1774040350]
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_afppm")
 hframes = 6
 vframes = 15
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1748900487]
 shape = SubResource("CapsuleShape2D_n1xdv")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1303363406]
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=6049575]
 tree_root = SubResource("AnimationNodeStateMachine_ppr6r")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 parameters/goblin_movement/blend_position = Vector2(0.18660283, 0.10313904)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1991045082]
 zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true

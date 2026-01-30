@@ -13,7 +13,7 @@ var facing_direction: Vector2 = Vector2.RIGHT
 
 @export var health: float = 100.0
 var dead: bool = false
-
+var can_block: bool = false
 
 #region Player dash
 @export var dash_speed: float = 800.0
@@ -25,7 +25,7 @@ var can_dash: bool = true
 var dash_direction: Vector2 = Vector2.ZERO
 
 @export var parry_duration: float = 0.5
-var parry_timer: float = 0.0																																	
+var parry_timer: float = 0.0
 var is_parrying: bool = false
 var parry_cooldown_timer: float = 0.0
 var parry_cooldown: float = 1
@@ -78,19 +78,11 @@ func update_parry(delta) -> void:
 	if parry_timer >= parry_duration:
 		is_parrying = false
 		parry_timer = 0.0
-		shield.hide()
-
-
-func _ready() -> void:
-	if shield: 
-		shield.hide()
-
 
 func _physics_process(delta: float) -> void:
 	if dead: 
 		return
 
-	# Normalizes player input to handle diagonal movement properly
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	animation_tree.set("parameters/goblin_movement/blend_position", velocity.normalized())
 	if input_direction != Vector2.ZERO:
@@ -100,8 +92,8 @@ func _physics_process(delta: float) -> void:
 		try_dash(input_direction)
 
 	if Input.is_action_just_pressed("parry"):
-		if parry_cooldown_timer <= 0.0:
-			shield.show()
+		if parry_cooldown_timer <= 0.0 && can_block:
+			animation_tree.set("parameters/goblin_block/blend_position", velocity.normalized())
 			is_parrying = true
 			parry_cooldown_timer = parry_cooldown
 		else:

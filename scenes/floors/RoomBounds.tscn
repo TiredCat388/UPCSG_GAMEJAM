@@ -1,4 +1,4 @@
-[gd_scene load_steps=0 format=3 uid="uid://qcow2pkj11k1"]
+[gd_scene format=3 uid="uid://qcow2pkj11k1"]
 
 [ext_resource type="Script" uid="uid://ckra3v8mj30x3" path="res://scripts/RoomBounds.gd" id="1_e3op1"]
 

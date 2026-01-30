@@ -11,6 +11,7 @@ var player: Node2D = null
 var warning: Node2D = null
 @onready var bullet_hell_spawner := $BulletHellSpawner 
 @onready var shield := $Shield
+@onready var animation_tree := $AnimationTree
 
 
 # General variables
@@ -68,6 +69,7 @@ func update_shield_bash(delta):
 	bash_timer += delta
 	_current_bash_speed = min(shield_bash_speed, _current_bash_speed + shield_bash_acceleration * delta)
 	velocity = _bash_dir * _current_bash_speed
+	update_animation_blend()
 	move_and_slide()
 	
 	var seen := []
@@ -118,6 +120,7 @@ func pick_new_target():
 func move_towards_target_random(_delta):
 	var dir = (target_position - global_position).normalized()
 	velocity = dir * speed
+	update_animation_blend()
 	move_and_slide()
 	if global_position.distance_to(target_position) < target_distance_threshold:
 		stop_and_attack()
@@ -126,6 +129,7 @@ func move_towards_target_random(_delta):
 func stop_and_attack():
 	stopping = true
 	velocity = Vector2.ZERO
+	update_animation_blend()
 	move_and_slide()
 	bullet_hell_spawner.bullet_hell()
 #endregion
@@ -171,6 +175,7 @@ func update_charge(delta):
 	charge_timer += delta
 	_current_charge_speed = min(charge_attack_speed, _current_charge_speed + charge_attack_acceleration * delta)
 	velocity = _charge_dir * _current_charge_speed
+	update_animation_blend()
 	move_and_slide()
 	
 	var seen := []
@@ -324,7 +329,7 @@ func _physics_process(delta):
 						dir = (global_position - player.global_position).normalized()
 
 					velocity = dir * speed
-
+					update_animation_blend()
 					move_and_slide()
 					check_slide_collisions()
 
@@ -363,5 +368,47 @@ func _physics_process(delta):
 						dir = (global_position - player.global_position).normalized()
 
 					velocity = dir * speed
+					update_animation_blend()
 					move_and_slide()
 					check_slide_collisions()
+
+
+#region Collision methods
+func check_slide_collisions():
+	var seen := []
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collision and collider.is_in_group("obstacle") and not seen.has(collider):
+			seen.append(collider)
+			collider.queue_free()
+			on_obstacle_collision(collider)
+
+
+func on_obstacle_collision(collider):
+	stunned = true
+	is_bashing = false
+
+	bash_cooldown_timer = bash_cooldown
+	velocity = Vector2.ZERO
+
+	shield.hide()
+
+	take_damage(collider.inflicted_damage)
+	await get_tree().create_timer(stun_time).timeout
+	stunned = false
+
+	shield.show()
+#endregion
+
+
+func take_damage(amount: float):
+	health -= amount
+	print("Main Character Health: %d" % health)
+	if health <= 0:
+		print("Main Character defeated!")
+		dead = true
+
+func update_animation_blend():
+	if velocity.length() > 0.01:
+		animation_tree.set("parameters/blend_position", velocity.normalized())

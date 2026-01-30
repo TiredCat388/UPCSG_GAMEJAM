@@ -222,5 +222,16 @@
 		"text": "And so, the path less taken led to the greatest victory of all. The server is quiet. The loot is... well, you can't use it, it's class-locked. But the silence? That's yours. Good game, Goblin. Good game."
 	  }
 	]
+  },
+  {
+	"scene_id": 12,
+	"title": "HeroIntroduction",
+	"type": "cutscene",
+	"dialogue": [
+	  {
+		"speaker": "????",
+		"text": "Another day, another grind."
+	  }
+	]
   }
 ]

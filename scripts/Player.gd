@@ -11,11 +11,11 @@ extends CharacterBody2D
 var facing_direction: Vector2 = Vector2.RIGHT
 
 
-@export var player_health: float = 100.0
-var is_dead: bool = false
+@export var health: float = 100.0
+var dead: bool = false
+var can_block: bool = false
 
-
-#region Dash
+#region Player dash
 @export var dash_speed: float = 800.0
 @export var dash_duration: float = 0.2
 @export var dash_cooldown: float = 0.5
@@ -25,7 +25,7 @@ var can_dash: bool = true
 var dash_direction: Vector2 = Vector2.ZERO
 
 @export var parry_duration: float = 0.5
-var parry_timer: float = 0.0																																	
+var parry_timer: float = 0.0
 var is_parrying: bool = false
 var parry_cooldown_timer: float = 0.0
 var parry_cooldown: float = 1
@@ -97,18 +97,6 @@ func update_parry(delta) -> void:
 	if parry_timer >= parry_duration:
 		is_parrying = false
 		parry_timer = 0.0
-		shield.hide()
-
-
-func _ready() -> void:
-	if shield: 
-		shield.hide()
-	
-	for banana in get_tree().get_nodes_in_group("banana"):
-		banana.hide()
-		bananas.append(banana)
-		print("Added banana to pool: %s" % banana)
-
 
 func _physics_process(delta: float) -> void:
 	if is_dead: 
@@ -120,12 +108,9 @@ func _physics_process(delta: float) -> void:
 		facing_direction = input_direction.normalized()
 
 
-	if (
-		Input.is_action_just_pressed("parry") 
-		and not is_dashing
-	):
-		if parry_cooldown_timer <= 0.0:
-			shield.show()
+	if Input.is_action_just_pressed("parry"):
+		if parry_cooldown_timer <= 0.0 && can_block:
+			animation_tree.set("parameters/goblin_block/blend_position", velocity.normalized())
 			is_parrying = true
 			parry_cooldown_timer = parry_cooldown
 	elif (
@@ -168,3 +153,4 @@ func _physics_process(delta: float) -> void:
 			)
 
 	move_and_slide()
+

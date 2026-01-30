@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvwixq3icij0x"]
+
+[ext_resource type="PackedScene" uid="uid://dihfatvlxxrbs" path="res://scenes/entities/Warning.tscn" id="1_uphm2"]
+[ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/MainCharacter.tscn" id="2_5485p"]
+[ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="3_8o1cs"]
+
+[node name="LevelScene" type="Node2D"]
+
+[node name="Warning" parent="." groups=["warning"] instance=ExtResource("1_uphm2")]
+z_index = 51
+position = Vector2(322, 256)
+scale = Vector2(0.03, 0.03)
+
+[node name="MainCharacter" parent="." groups=["hero"] instance=ExtResource("2_5485p")]
+position = Vector2(652, 304)
+fight_type = 2
+
+[node name="Player" parent="." instance=ExtResource("3_8o1cs")]
+position = Vector2(288, 306)

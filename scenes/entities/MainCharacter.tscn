@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c7svvywwun1h3"]
 
 [ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/MainCharacter.gd" id="1_vk5kn"]
+[ext_resource type="PackedScene" uid="uid://dhngdyga4d7ra" path="res://scenes/attacks/LightningStrike.tscn" id="2_ih5qh"]
 [ext_resource type="Texture2D" uid="uid://bjd6q4o85hg8m" path="res://assets/icon.svg" id="2_pq4va"]
 [ext_resource type="Script" uid="uid://doc3c4ubr2ye6" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
@@ -17,6 +18,7 @@ size = Vector2(64, 63)
 [node name="MainCharacter" type="CharacterBody2D" unique_id=516525854]
 z_index = 50
 script = ExtResource("1_vk5kn")
+lightning_scene = ExtResource("2_ih5qh")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1137343325]
 position = Vector2(1, 0)

@@ -33,6 +33,11 @@ extends Node2D
 @export var second_throw_duration: float = 3
 @export var second_return_duration: float = 0.35
 
+# Fourth attack (lightning)
+@export var fourth_offset: Vector2 = Vector2(0, -30)
+@export var fourth_duration: float = 1
+@export var cast_delay: float = 1
+
 # =========================================================
 # INTERNAL STATE
 # =========================================================
@@ -44,10 +49,25 @@ var default_position: Vector2
 var initial_rotation: float
 var initial_scale: Vector2
 
+# Fourth attack state
+var is_casting: bool = false
+var cast_timer: float = 0.0
+var cast_target: Vector2 = Vector2.ZERO
+var fourth_timer: float = 0.0
+
 # =========================================================
 # ATTACK STATES
 # =========================================================
-enum AttackState { NONE, FIRST, SECOND_SPIN, SECOND_THROW, SECOND_RETURN, THIRD }
+enum AttackState {
+	NONE,
+	FIRST,
+	SECOND_SPIN,
+	SECOND_THROW,
+	SECOND_RETURN,
+	THIRD,
+	FOURTH
+}
+
 var attack_state: AttackState = AttackState.NONE
 
 # First attack variables
@@ -93,6 +113,8 @@ func _process(delta: float) -> void:
 			_second_attack_process(delta)
 		AttackState.THIRD:
 			_third_attack_process(delta)
+		AttackState.FOURTH:
+			_fourth_attack_process(delta)
 		AttackState.NONE:
 			_idle_process(delta)
 
@@ -151,7 +173,7 @@ var third_attack_direction: Vector2 = Vector2.ZERO
 var third_attack_offset: Vector2 = Vector2.ZERO  # relative to parent at start
 
 func third_attack(duration: float, direction: Vector2) -> void:
-	if weapon_instance == null:
+	if weapon_instance == null or attack_state != AttackState.NONE:
 		return
 	
 	third_attack_progress = 0.0
@@ -310,6 +332,42 @@ func _end_second_attack() -> void:
 	attack_state = AttackState.NONE
 	weapon_instance.global_position = second_origin_pos
 	weapon_instance.rotation = second_origin_rot
+
+# =========================================================
+# FOURTH ATTACK (stop parent, raise hammer, cast lightning)
+# =========================================================
+func fourth_attack(target: Vector2) -> void:
+	if attack_state != AttackState.NONE or weapon_instance == null:
+		return
+
+	attack_state = AttackState.FOURTH
+	fourth_timer = 0.0
+	cast_timer = 0.0
+	cast_target = target
+
+
+	get_parent().lock_movement()
+	# Raise weapon immediately (or animate later)
+	weapon_instance.position = fourth_offset
+	weapon_instance.rotation = 0.0
+	weapon_instance.scale = initial_scale * 1.2
+
+func _fourth_attack_process(delta: float) -> void:
+	fourth_timer += delta
+	cast_timer += delta
+
+	# Cast lightning after delay
+	if cast_timer >= cast_delay and cast_target != Vector2.ZERO:
+		get_parent().cast_lightning(cast_target)
+		cast_target = Vector2.ZERO  # Prevent multiple casts
+
+	# Reset weapon and release parent after duration
+	if fourth_timer >= fourth_duration:
+		attack_state = AttackState.NONE
+		reset_weapon()
+		get_parent().unlock_movement()
+
+
 
 # =========================================================
 # HELPERS

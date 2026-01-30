@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var bullet_hell_spawner := $BulletHellSpawner 
 @onready var sword_swinger := $SwordSwinger 
 @onready var floating_weapon := $FloatingWeaponSocket
+@export var lightning_scene: PackedScene
 
 # =========================================================
 # EXPORT VARIABLES
@@ -27,6 +28,14 @@ extends CharacterBody2D
 var target_position: Vector2
 var stopping: bool = false
 var stop_timer: float = 0.0
+# Spell casting state
+var is_casting_spell: bool = false
+var cast_timer: float = 0.0
+@export var cast_delay: float = 0.4
+var cast_target: Vector2
+
+var movement_locked: bool = false
+
 
 # Dash state
 var is_dashing: bool = false
@@ -59,6 +68,23 @@ func _ready():
 # PHYSICS PROCESS
 # =========================================================
 func _physics_process(delta):
+	if movement_locked:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
+	if is_casting_spell:
+		cast_timer += delta
+		velocity = Vector2.ZERO  # hard stop
+
+		if cast_timer >= cast_delay:
+			# Cast the spell
+			floating_weapon.fourth_attack(cast_target)
+			is_casting_spell = false
+			stopping = true  # remain stopped until attack finishes
+
+		return
+
 	if is_dashing:
 		# Let the normal dash logic run (your existing dash handles movement)
 		dash_timer += delta
@@ -123,9 +149,10 @@ func stop_and_attack():
 	stopping = true
 	velocity = Vector2.ZERO
 
-	var attack := randi() % 3
+	var attack := randi() % 4
 	var dir := get_facing_direction()
-
+	
+	var targ :=  Vector2(200, 200)
 	match attack:
 		0:
 			floating_weapon.first_attack()
@@ -133,6 +160,9 @@ func stop_and_attack():
 			floating_weapon.second_attack(dir)
 		2:
 			floating_weapon.third_attack(1.0, dir)
+		3:
+			floating_weapon.fourth_attack(targ)
+			
 
 	print("attack:", attack)
 
@@ -170,3 +200,22 @@ func dash(direction: Vector2 = Vector2.ZERO, distance: float = -1.0, duration: f
 	dash_duration = duration if duration > 0 else 0.2
 
 	velocity = Vector2.ZERO
+
+
+func cast_lightning(target_pos: Vector2):
+	var strike = lightning_scene.instantiate()
+	strike.global_position = target_pos
+	get_tree().current_scene.add_child(strike)
+
+# =============================
+# EXTERNAL CONTROL (BY WEAPON)
+# =============================
+func lock_movement():
+	stopping = true
+	movement_locked = true   # ADD THIS FLAG
+	velocity = Vector2.ZERO
+
+func unlock_movement():
+	stopping = false
+	movement_locked = false
+	pick_new_target()

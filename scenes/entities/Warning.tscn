@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://dihfatvlxxrbs"]
+[gd_scene load_steps=3 format=3 uid="uid://dihfatvlxxrbs"]
 
 [ext_resource type="Texture2D" uid="uid://d3oj6ydhu0y5x" path="res://assets/warning.png" id="1_jakpn"]
 [ext_resource type="Script" uid="uid://vi4mwoxuhvrh" path="res://scripts/Warning.gd" id="2_jakpn"]
 
-[node name="Warning" type="Sprite2D" unique_id=1072058247 groups=["warning"]]
+[node name="Warning" type="Sprite2D"]
 scale = Vector2(0.02, 0.02)
 texture = ExtResource("1_jakpn")
 script = ExtResource("2_jakpn")

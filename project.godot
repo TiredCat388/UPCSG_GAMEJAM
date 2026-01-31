@@ -23,7 +23,6 @@ config/icon="res://assets/icon.svg"
 
 CutsceneManager="*uid://b3phraql0c45y"
 DialogueSystem="*uid://bdpnxnlxq2qir"
-GameManager="*uid://0fafqt1gifud"
 
 [display]
 

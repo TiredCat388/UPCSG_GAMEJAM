@@ -63,9 +63,6 @@ tile_set = ExtResource("2_c1aho")
 texture_filter = 1
 tile_set = SubResource("TileSet_13n10")
 
-[node name="Player" parent="GameplayRoot" unique_id=1644669309 instance=ExtResource("3_7f4sq")]
-position = Vector2(56, 56)
-
 [node name="RoomBounds" parent="GameplayRoot" unique_id=1634083806 instance=ExtResource("4_sv8ea")]
 
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds" index="0" unique_id=1936798602]
@@ -83,6 +80,9 @@ shape = SubResource("RectangleShape2D_13n10")
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds3" index="0" unique_id=1936798602]
 position = Vector2(880, 528)
 shape = SubResource("RectangleShape2D_gp0dr")
+
+[node name="Player" parent="GameplayRoot" unique_id=1644669309 instance=ExtResource("3_7f4sq")]
+position = Vector2(56, 56)
 
 [editable path="GameplayRoot/RoomBounds"]
 [editable path="GameplayRoot/RoomBounds2"]

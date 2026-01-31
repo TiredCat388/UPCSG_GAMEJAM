@@ -4,6 +4,9 @@ extends CharacterBody2D
 # Fight phases
 enum FightType {BULLET_HELL, SHIELD, PARRY}
 @export var fight_phase: FightType = FightType.BULLET_HELL
+@export var move_time_before_attack: float = 3.0
+var move_timer: float = 0.0
+
 
 
 # References to other nodes
@@ -112,18 +115,24 @@ var stop_timer: float = 0.0
 func pick_new_target():
 	var rect = get_viewport().get_visible_rect()
 	target_position = Vector2(
-		randf_range(rect.position.x + map_edge_padding, rect.position.x + rect.size.x - map_edge_padding),
-		randf_range(rect.position.y + map_edge_padding, rect.position.y + rect.size.y - map_edge_padding)
-	)
+randf_range(rect.position.x + map_edge_padding, rect.position.x + rect.size.x - map_edge_padding),
+randf_range(rect.position.y + map_edge_padding, rect.position.y + rect.size.y - map_edge_padding)
+)
+	move_timer = 0.0   # start counting movement time
 
 
-func move_towards_target_random(_delta):
+func move_towards_target_random(delta):
+	move_timer += delta   # count how long we've been moving
+
 	var dir = (target_position - global_position).normalized()
 	velocity = dir * speed
 	update_animation_blend()
 	move_and_slide()
-	if global_position.distance_to(target_position) < target_distance_threshold:
+
+	# Stop ONLY after 3 seconds of moving
+	if move_timer >= move_time_before_attack:
 		stop_and_attack()
+
 
 
 func stop_and_attack():
@@ -204,6 +213,7 @@ func end_charge(collider):
 		if res == "parried":
 			is_stunned = true
 			velocity = Vector2.ZERO
+			update_animation_blend()
 			await get_tree().create_timer(stunned_duration).timeout
 			is_stunned = false
 
@@ -211,6 +221,7 @@ func end_charge(collider):
 func pause():
 	is_winding_up = true
 	velocity = Vector2.ZERO
+	update_animation_blend()
 	await get_tree().create_timer(charge_windup_duration).timeout
 	is_winding_up = false
 #endregion
@@ -234,6 +245,7 @@ func on_obstacle_collision(collider):
 
 	bash_cooldown_timer = shield_bash_cooldown
 	velocity = Vector2.ZERO
+	update_animation_blend()
 
 	shield.hide()
 
@@ -282,7 +294,7 @@ func _ready():
 	match fight_phase:
 		FightType.BULLET_HELL:
 			speed = bullet_hell_phase_speed
-			pick_new_target() 
+			pick_new_target()
 			show()
 			
 		FightType.SHIELD:
@@ -347,6 +359,7 @@ func _physics_process(delta):
 			elif is_slipping:
 				if velocity.length() > 10.0:
 					velocity = velocity.move_toward(Vector2.ZERO, speed * 2 * delta)
+					update_animation_blend()
 					move_and_slide()
 				else:
 					await get_tree().create_timer(slip_recovery_duration).timeout
@@ -371,43 +384,6 @@ func _physics_process(delta):
 					update_animation_blend()
 					move_and_slide()
 					check_slide_collisions()
-
-
-#region Collision methods
-func check_slide_collisions():
-	var seen := []
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		if collision and collider.is_in_group("obstacle") and not seen.has(collider):
-			seen.append(collider)
-			collider.queue_free()
-			on_obstacle_collision(collider)
-
-
-func on_obstacle_collision(collider):
-	stunned = true
-	is_bashing = false
-
-	bash_cooldown_timer = bash_cooldown
-	velocity = Vector2.ZERO
-
-	shield.hide()
-
-	take_damage(collider.inflicted_damage)
-	await get_tree().create_timer(stun_time).timeout
-	stunned = false
-
-	shield.show()
-#endregion
-
-
-func take_damage(amount: float):
-	health -= amount
-	print("Main Character Health: %d" % health)
-	if health <= 0:
-		print("Main Character defeated!")
-		dead = true
 
 func update_animation_blend():
 	if velocity.length() > 0.01:

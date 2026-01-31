@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7svvywwun1h3"]
 
-[ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/MainCharacter.gd" id="1_vk5kn"]
+[ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/Hero.gd" id="1_6uswd"]
 [ext_resource type="Texture2D" uid="uid://c0bkq0ijbi2ry" path="res://assets/characters/HERO.png" id="2_0qwah"]
 [ext_resource type="Script" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
@@ -131,10 +131,10 @@ blend_point_4/node = SubResource("AnimationNodeAnimation_ih5qh")
 blend_point_4/pos = Vector2(0, 1)
 blend_mode = 1
 
-[node name="MainCharacter" type="CharacterBody2D" unique_id=990402041]
+[node name="MainCharacter" type="CharacterBody2D" unique_id=990402041 groups=["hero"]]
 z_index = 50
 collision_layer = 2
-script = ExtResource("1_vk5kn")
+script = ExtResource("1_6uswd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=879760014]
 texture_filter = 1

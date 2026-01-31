@@ -3,16 +3,14 @@ extends CharacterBody2D
 
 @onready var shield := $Shield
 
-
 @export var MAX_SPEED: float = 400.0
 @export var ACCELERATION: float = 1600.0
 @export var DECELERATION: float = 2000.0
 @export var animation_tree: AnimationTree
 var facing_direction: Vector2 = Vector2.RIGHT
 
-
-@export var health: float = 100.0
-var dead: bool = false
+@export var player_health: float = 100.0
+var is_dead: bool = false
 var can_block: bool = false
 
 #region Player dash
@@ -29,7 +27,6 @@ var parry_timer: float = 0.0
 var is_parrying: bool = false
 var parry_cooldown_timer: float = 0.0
 var parry_cooldown: float = 1
-
 
 func _start_dash() -> void:
 	velocity = dash_direction.normalized() * dash_speed
@@ -75,7 +72,6 @@ func throw_banana() -> void:
 	print("No available bananas to throw.")
 #endregion
 
-
 func take_damage(amount: float) -> String:
 	if is_parrying:
 		print("Parried the attack!")
@@ -87,10 +83,10 @@ func take_damage(amount: float) -> String:
 	if player_health <= 0:
 		print("Player defeated!")
 		is_dead = true
+		GameManager.encountered_floor = true
 		return "defeated"
 
 	return "damaged"
-
 
 func update_parry(delta) -> void:
 	parry_timer += delta
@@ -100,7 +96,7 @@ func update_parry(delta) -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_dead: 
-		return
+		respawn()
 
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	animation_tree.set("parameters/goblin_movement/blend_position", velocity.normalized())
@@ -154,3 +150,14 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+#region Spawn
+func respawn():
+	if is_dead:
+		var target_floor = max(GameManager.current_floor - 1, 1)
+		GameManager.current_floor = target_floor
+		print(target_floor)
+		
+		var path := "res://scenes/floors/Floor%d.tscn" % target_floor
+		get_tree().change_scene_to_file(path)
+
+#endregion

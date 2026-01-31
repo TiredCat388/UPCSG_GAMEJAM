@@ -44,7 +44,7 @@ theme_override_constants/separation = 20
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 4
 
 [node name="TextVBox" type="VBoxContainer" parent="Control/DialoguePanel/MarginContainer/MainHBox" unique_id=511235358]
 layout_mode = 2

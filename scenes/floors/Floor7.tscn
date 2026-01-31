@@ -25,7 +25,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_sv8ea")
 sources/2 = SubResource("TileSetAtlasSource_c1aho")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u475r"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5xgoa"]
 resource_local_to_scene = true
 size = Vector2(608, 36)
 
@@ -52,7 +52,7 @@ dialogue_system = NodePath("../DialogueSystem")
 dialogue_id = 8
 
 [node name="Sprite2D" parent="npc" index="0" unique_id=634034095]
-scale = Vector2(0.3, 0.3)
+frame = 11
 
 [node name="ExitDoor" parent="." unique_id=1634083806 instance=ExtResource("6_5xgoa")]
 script = ExtResource("7_wytxp")
@@ -60,7 +60,7 @@ floor_number = 7
 
 [node name="CollisionShape2D" parent="ExitDoor" index="0" unique_id=1936798602]
 position = Vector2(560, -400)
-shape = SubResource("RectangleShape2D_u475r")
+shape = SubResource("RectangleShape2D_5xgoa")
 
 [editable path="npc"]
 [editable path="ExitDoor"]

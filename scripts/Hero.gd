@@ -4,6 +4,9 @@ extends CharacterBody2D
 # Fight phases
 enum FightType {BULLET_HELL, SHIELD, PARRY}
 @export var fight_phase: FightType = FightType.BULLET_HELL
+@export var move_time_before_attack: float = 3.0
+var move_timer: float = 0.0
+
 
 
 # References to other nodes
@@ -112,18 +115,24 @@ var stop_timer: float = 0.0
 func pick_new_target():
 	var rect = get_viewport().get_visible_rect()
 	target_position = Vector2(
-		randf_range(rect.position.x + map_edge_padding, rect.position.x + rect.size.x - map_edge_padding),
-		randf_range(rect.position.y + map_edge_padding, rect.position.y + rect.size.y - map_edge_padding)
-	)
+randf_range(rect.position.x + map_edge_padding, rect.position.x + rect.size.x - map_edge_padding),
+randf_range(rect.position.y + map_edge_padding, rect.position.y + rect.size.y - map_edge_padding)
+)
+	move_timer = 0.0   # start counting movement time
 
 
-func move_towards_target_random(_delta):
+func move_towards_target_random(delta):
+	move_timer += delta   # count how long we've been moving
+
 	var dir = (target_position - global_position).normalized()
 	velocity = dir * speed
 	update_animation_blend()
 	move_and_slide()
-	if global_position.distance_to(target_position) < target_distance_threshold:
+
+	# Stop ONLY after 3 seconds of moving
+	if move_timer >= move_time_before_attack:
 		stop_and_attack()
+
 
 
 func stop_and_attack():

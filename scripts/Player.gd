@@ -83,6 +83,7 @@ func take_damage(amount: float) -> String:
 	if player_health <= 0:
 		print("Player defeated!")
 		is_dead = true
+		GameManager.encountered_floor = true
 		return "defeated"
 
 	return "damaged"
@@ -154,8 +155,9 @@ func respawn():
 	if is_dead:
 		var target_floor = max(GameManager.current_floor - 1, 1)
 		GameManager.current_floor = target_floor
+		print(target_floor)
 		
 		var path := "res://scenes/floors/Floor%d.tscn" % target_floor
-		get_tree().change_scence_to_file(path)
+		get_tree().change_scene_to_file(path)
 
 #endregion

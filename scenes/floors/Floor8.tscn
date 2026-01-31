@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="7_7anc1"]
 [ext_resource type="PackedScene" uid="uid://dihfatvlxxrbs" path="res://scenes/entities/Warning.tscn" id="8_vrycg"]
 [ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="9_i8oj4"]
+[ext_resource type="PackedScene" uid="uid://r6er4618x43y" path="res://scenes/attacks/Banana.tscn" id="10_3csde"]
 [ext_resource type="Script" uid="uid://8kmye2ima3kc" path="res://scenes/floors/roomexit.gd" id="10_y1jp3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfwqc"]
@@ -109,6 +110,8 @@ shape = SubResource("RectangleShape2D_2npgi")
 process_mode = 4
 position = Vector2(248, -320)
 fight_phase = 2
+
+[node name="Banana" parent="GameplayRoot" unique_id=1480045529 instance=ExtResource("10_3csde")]
 
 [node name="ExitDoor" parent="." unique_id=763876126 instance=ExtResource("5_m3u54")]
 script = ExtResource("10_y1jp3")

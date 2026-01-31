@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://di1l6xgnxeblv"]
 
-[ext_resource type="Script" uid="uid://bbenuwmws0yiv" path="res://scripts/floor_scripts/floor_2.gd" id="1_jl3kk"]
+[ext_resource type="Script" uid="uid://bfk38brv1mrby" path="res://scripts/floor_scripts/floor_6.gd" id="1_fnjwf"]
 [ext_resource type="TileSet" uid="uid://c5tlbrw8fohlj" path="res://resources/wall_tileset.tres" id="2_c8mgn"]
 [ext_resource type="TileSet" uid="uid://vfad4wvkctu0" path="res://resources/floor_tileset.tres" id="3_fnjwf"]
 [ext_resource type="Texture2D" uid="uid://cfe3rt3e44k15" path="res://assets/tilesets/CaveEntrance.png" id="4_lh21e"]
@@ -55,8 +55,8 @@ size = Vector2(64, 16)
 resource_local_to_scene = true
 size = Vector2(608, 36)
 
-[node name="Floor2" type="Node2D" unique_id=1203568675]
-script = ExtResource("1_jl3kk")
+[node name="Floor6" type="Node2D" unique_id=1203568675]
+script = ExtResource("1_fnjwf")
 
 [node name="GameplayRoot" type="Node2D" parent="." unique_id=933238444]
 

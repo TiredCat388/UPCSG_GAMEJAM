@@ -25,3 +25,10 @@ func _physics_process(delta):
 	# If bullet is outside, remove it
 	if not viewport_rect.has_point(global_position):
 		queue_free()
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		if body.has_method("take_damage"):
+			body.take_damage(10)
+		queue_free()  # destroy bullet after hit
+	

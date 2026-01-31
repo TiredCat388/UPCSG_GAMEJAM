@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="6_loese"]
 [ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="7_mffj3"]
 [ext_resource type="PackedScene" uid="uid://bdpnxnlxq2qir" path="res://scenes/ui/DialogueSystem.tscn" id="9_2npgi"]
+[ext_resource type="Script" uid="uid://8kmye2ima3kc" path="res://scenes/floors/roomexit.gd" id="10_5ml5n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfwqc"]
 texture = ExtResource("4_2npgi")
@@ -34,11 +35,11 @@ texture = ExtResource("4_2npgi")
 [sub_resource type="TileSet" id="TileSet_13n10"]
 sources/0 = SubResource("TileSetAtlasSource_vfwqc")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ml5n"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_loese"]
 resource_local_to_scene = true
 size = Vector2(512, 384)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_loese"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clhf8"]
 resource_local_to_scene = true
 size = Vector2(480, 256)
 
@@ -49,6 +50,10 @@ size = Vector2(608, 416)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2npgi"]
 resource_local_to_scene = true
 size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0tos"]
+resource_local_to_scene = true
+size = Vector2(608, 36)
 
 [node name="Floor2" type="Node2D" unique_id=1203568675]
 script = ExtResource("1_2kxia")
@@ -74,13 +79,13 @@ tile_set = SubResource("TileSet_13n10")
 
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds" index="0" unique_id=1936798602]
 position = Vector2(288, 224)
-shape = SubResource("RectangleShape2D_5ml5n")
+shape = SubResource("RectangleShape2D_loese")
 
 [node name="RoomBounds2" parent="GameplayRoot" unique_id=2137187623 instance=ExtResource("5_5ml5n")]
 
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds2" index="0" unique_id=1936798602]
 position = Vector2(304, 576)
-shape = SubResource("RectangleShape2D_loese")
+shape = SubResource("RectangleShape2D_clhf8")
 
 [node name="RoomBounds3" type="Area2D" parent="GameplayRoot" unique_id=191301711]
 script = ExtResource("6_2kxia")
@@ -104,8 +109,17 @@ position = Vector2(1144, 360)
 
 [node name="DialogueSystem" parent="." unique_id=1297630051 instance=ExtResource("9_2npgi")]
 
+[node name="ExitDoor" parent="." unique_id=418589355 instance=ExtResource("5_5ml5n")]
+script = ExtResource("10_5ml5n")
+floor_number = 2
+
+[node name="CollisionShape2D" parent="ExitDoor" index="0" unique_id=1936798602]
+position = Vector2(880, 718)
+shape = SubResource("RectangleShape2D_y0tos")
+
 [connection signal="body_entered" from="GameplayRoot/RoomBounds3" to="GameplayRoot/RoomBounds3" method="_on_body_entered"]
 [connection signal="body_entered" from="GameplayRoot/BossSpawner" to="." method="_on_boss_spawner_body_entered"]
 
 [editable path="GameplayRoot/RoomBounds"]
 [editable path="GameplayRoot/RoomBounds2"]
+[editable path="ExitDoor"]

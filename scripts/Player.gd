@@ -95,7 +95,7 @@ func update_parry(delta) -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_dead: 
-		return
+		respawn()
 
 	var input_direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	animation_tree.set("parameters/goblin_movement/blend_position", velocity.normalized())

@@ -11,6 +11,6 @@ func _on_boss_spawner_body_entered(body: Node2D) -> void:
 		return
 	
 	boss.process_mode = Node.PROCESS_MODE_INHERIT
-	DialogueSystem.start_dialogue(3)
+	DialogueSystem.start_dialogue(11)
 	
 	

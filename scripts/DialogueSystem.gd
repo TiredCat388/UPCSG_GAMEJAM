@@ -11,6 +11,15 @@ const JSON_PATH = "res://resources/json/dialogue_data.json"
 @onready var text_label = $Control/DialoguePanel/MarginContainer/MainHBox/TextVBox/DialogueText
 @onready var portrait_rect = $Control/DialoguePanel/MarginContainer/MainHBox/PortraitRect
 
+const SPEAKER_PORTRAITS := {
+	"The Hero": "res://assets/portraits/hero.png",
+	"Traumatized Goblin": "res://assets/portraits/goblin_trauma.png",
+	"Armor Smith": "res://assets/portraits/armor_smith.png",
+	"Merchant": "res://assets/portraits/merchant.png",
+	"Monkey": "res://assets/portraits/monkey.png",
+	"????": "res://assets/portraits/hero.png"
+}
+
 # --- STATE VARIABLES ---
 var dialogue_lookup = {} # We will convert the JSON array into this dictionary
 var current_queue = []
@@ -70,10 +79,13 @@ func show_next_line():
 	name_label.text = line["speaker"] 
 	text_label.text = line["text"]
 	
-	if line["speaker"] == "Narrator" or line["speaker"] == "System":
-		portrait_rect.hide()
-	else:
+	var speaker = line["speaker"]
+
+	if speaker in SPEAKER_PORTRAITS:
+		portrait_rect.texture = load(SPEAKER_PORTRAITS[speaker])
 		portrait_rect.show()
+	else:
+		portrait_rect.hide()
 	
 	# Typewriter Animation
 	text_label.visible_ratio = 0.0

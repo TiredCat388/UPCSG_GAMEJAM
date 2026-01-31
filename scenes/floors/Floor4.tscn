@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://2jc0bbwq8q3u"]
 
-[ext_resource type="Script" uid="uid://bbenuwmws0yiv" path="res://scripts/floor_scripts/floor_2.gd" id="1_j53ub"]
+[ext_resource type="Script" uid="uid://c46hrabilisp1" path="res://scripts/floor_scripts/floor_4.gd" id="1_jse8y"]
 [ext_resource type="TileSet" uid="uid://c5tlbrw8fohlj" path="res://resources/wall_tileset.tres" id="2_jse8y"]
 [ext_resource type="TileSet" uid="uid://vfad4wvkctu0" path="res://resources/floor_tileset.tres" id="3_2ybn6"]
 [ext_resource type="Texture2D" uid="uid://cfe3rt3e44k15" path="res://assets/tilesets/CaveEntrance.png" id="4_sm3ds"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://ckra3v8mj30x3" path="res://scripts/RoomBounds.gd" id="6_be1nt"]
 [ext_resource type="PackedScene" uid="uid://bu3hyhaaugnhu" path="res://scenes/entities/Player.tscn" id="7_le53s"]
 [ext_resource type="PackedScene" uid="uid://c7svvywwun1h3" path="res://scenes/entities/Hero.tscn" id="8_c6hh5"]
+[ext_resource type="Script" uid="uid://8kmye2ima3kc" path="res://scenes/floors/roomexit.gd" id="9_jse8y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfwqc"]
 texture = ExtResource("4_sm3ds")
@@ -33,11 +34,11 @@ texture = ExtResource("4_sm3ds")
 [sub_resource type="TileSet" id="TileSet_13n10"]
 sources/0 = SubResource("TileSetAtlasSource_vfwqc")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j53ub"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ybn6"]
 resource_local_to_scene = true
 size = Vector2(512, 288)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jse8y"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sm3ds"]
 resource_local_to_scene = true
 size = Vector2(448, 288)
 
@@ -49,8 +50,12 @@ size = Vector2(576, 288)
 resource_local_to_scene = true
 size = Vector2(64, 16)
 
-[node name="Floor2" type="Node2D" unique_id=1203568675]
-script = ExtResource("1_j53ub")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_titrg"]
+resource_local_to_scene = true
+size = Vector2(608, 36)
+
+[node name="Floor4" type="Node2D" unique_id=1203568675]
+script = ExtResource("1_jse8y")
 
 [node name="GameplayRoot" type="Node2D" parent="." unique_id=933238444]
 
@@ -73,13 +78,13 @@ tile_set = SubResource("TileSet_13n10")
 
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds" index="0" unique_id=1936798602]
 position = Vector2(288, 176)
-shape = SubResource("RectangleShape2D_j53ub")
+shape = SubResource("RectangleShape2D_2ybn6")
 
 [node name="RoomBounds2" parent="GameplayRoot" unique_id=2137187623 instance=ExtResource("5_titrg")]
 
 [node name="CollisionShape2D" parent="GameplayRoot/RoomBounds2" index="0" unique_id=1936798602]
 position = Vector2(800, 16)
-shape = SubResource("RectangleShape2D_jse8y")
+shape = SubResource("RectangleShape2D_sm3ds")
 
 [node name="RoomBounds3" type="Area2D" parent="GameplayRoot" unique_id=191301711]
 script = ExtResource("6_be1nt")
@@ -97,13 +102,22 @@ position = Vector2(56, 56)
 position = Vector2(736, -144)
 shape = SubResource("RectangleShape2D_2npgi")
 
-[node name="MainCharacter" parent="." unique_id=990402041 groups=["hero"] instance=ExtResource("8_c6hh5")]
+[node name="MainCharacter" parent="." unique_id=990402041 instance=ExtResource("8_c6hh5")]
 process_mode = 4
 position = Vector2(312, -408)
 fight_phase = 1
+
+[node name="ExitDoor" parent="." unique_id=212942380 instance=ExtResource("5_titrg")]
+script = ExtResource("9_jse8y")
+floor_number = 4
+
+[node name="CollisionShape2D" parent="ExitDoor" index="0" unique_id=1936798602]
+position = Vector2(576, -432)
+shape = SubResource("RectangleShape2D_titrg")
 
 [connection signal="body_entered" from="GameplayRoot/RoomBounds3" to="GameplayRoot/RoomBounds3" method="_on_body_entered"]
 [connection signal="body_entered" from="GameplayRoot/BossSpawner" to="." method="_on_boss_spawner_body_entered"]
 
 [editable path="GameplayRoot/RoomBounds"]
 [editable path="GameplayRoot/RoomBounds2"]
+[editable path="ExitDoor"]

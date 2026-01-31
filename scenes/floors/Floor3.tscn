@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdpnxnlxq2qir" path="res://scenes/ui/DialogueSystem.tscn" id="4_ydomf"]
 [ext_resource type="PackedScene" uid="uid://dbhs2jqumnb08" path="res://scenes/entities/npc.tscn" id="5_2qf2x"]
 [ext_resource type="PackedScene" uid="uid://qcow2pkj11k1" path="res://scenes/floors/RoomBounds.tscn" id="6_xmqyf"]
+[ext_resource type="Script" uid="uid://8kmye2ima3kc" path="res://scenes/floors/roomexit.gd" id="7_im6qb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sv8ea"]
 texture = ExtResource("1_m1x78")
@@ -62,9 +63,13 @@ _data = {
 &"npc_goblin_idle": SubResource("Animation_xmqyf")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmqyf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0fht1"]
 resource_local_to_scene = true
 size = Vector2(672, 416)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrghi"]
+resource_local_to_scene = true
+size = Vector2(608, 36)
 
 [node name="NPCFloor1" type="Node2D" unique_id=1593638043]
 
@@ -99,7 +104,16 @@ position = Vector2(356, 329)
 
 [node name="CollisionShape2D" parent="RoomBounds" index="0" unique_id=1936798602]
 position = Vector2(204, -25)
-shape = SubResource("RectangleShape2D_xmqyf")
+shape = SubResource("RectangleShape2D_0fht1")
+
+[node name="ExitDoor" parent="." unique_id=1618374710 instance=ExtResource("6_xmqyf")]
+script = ExtResource("7_im6qb")
+floor_number = 3
+
+[node name="CollisionShape2D" parent="ExitDoor" index="0" unique_id=1936798602]
+position = Vector2(560, -365)
+shape = SubResource("RectangleShape2D_rrghi")
 
 [editable path="npc"]
 [editable path="RoomBounds"]
+[editable path="ExitDoor"]

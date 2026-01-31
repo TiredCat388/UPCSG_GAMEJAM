@@ -54,10 +54,3 @@ func _physics_process(delta):
 	var viewport_rect = get_viewport().get_visible_rect().grow(radius)
 	if not viewport_rect.has_point(global_position):
 		queue_free()
-
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		if body.has_method("take_damage"):
-			body.take_damage(10)
-		queue_free()  # destroy bullet after hit
-	

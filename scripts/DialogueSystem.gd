@@ -1,8 +1,5 @@
 extends CanvasLayer
 
-# --- ADD THIS LINE ---
-signal dialogue_finished
-
 # --- CONFIGURATION ---
 const JSON_PATH = "res://resources/json/dialogue_data.json"
 
@@ -12,30 +9,17 @@ const JSON_PATH = "res://resources/json/dialogue_data.json"
 @onready var text_label = $Control/DialoguePanel/MarginContainer/MainHBox/TextVBox/DialogueText
 @onready var portrait_rect = $Control/DialoguePanel/MarginContainer/MainHBox/PortraitRect
 
-const SPEAKER_PORTRAITS := {
-	"The Hero": "res://assets/portraits/hero.png",
-	"Traumatized Goblin": "res://assets/portraits/goblin_trauma.png",
-	"Armor Smith": "res://assets/portraits/armor_smith.png",
-	"Merchant": "res://assets/portraits/merchant.png",
-	"Monkey": "res://assets/portraits/monkey.png",
-	"????": "res://assets/portraits/hero.png"
-}
-
 # --- STATE VARIABLES ---
-var dialogue_lookup = {} 
+var dialogue_lookup = {} # We will convert the JSON array into this dictionary
 var current_queue = []
 var is_typing = false
-var is_active = false
-var on_cooldown = false 
 
 func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS 
-	
-	show() 
-	if has_node("Control"):
-		$Control.show()
-	
+	# 1. Hide the box initially
 	dialogue_panel.hide()
+	show()
+	
+	# 2. Load the database
 	load_json()
 
 func load_json():
@@ -49,34 +33,33 @@ func load_json():
 	
 	if json.parse(content) == OK:
 		var data_array = json.data
+		
 		for scene in data_array:
 			var id = str(int(scene["scene_id"]))
 			dialogue_lookup[id] = scene
+			
+		print("JSON Loaded Successfully! Scenes found: ", dialogue_lookup.keys())
 	else:
 		print("JSON Parse Error: ", json.get_error_message())
 
 func start_dialogue(id):
-	if on_cooldown: return
-	
 	var id_str = str(id)
+	
 	if id_str in dialogue_lookup:
 		var scene_data = dialogue_lookup[id_str]
+		
 		if scene_data.has("dialogue"):
 			current_queue = scene_data["dialogue"].duplicate()
-			
-			# --- NEW: DISABLE MOVEMENT WITHOUT FREEZING GAME ---
-			# This tells any node in the "player" group to stop running its physics code.
-			# Animations and NPCs will keep moving!
-			get_tree().call_group("player", "set_physics_process", false)
-			
-			is_active = true
 			dialogue_panel.show()
 			show_next_line()
+		else:
+			print("Error: Scene ID " + id_str + " has no 'dialogue' array.")
+	else:
+		print("Error: Scene ID '" + id_str + "' not found in data.")
 
 func show_next_line():
 	if current_queue.is_empty():
-		end_dialogue() 
-		emit_signal("dialogue_finished")
+		dialogue_panel.hide()
 		return
 
 	var line = current_queue.pop_front()
@@ -84,13 +67,10 @@ func show_next_line():
 	name_label.text = line["speaker"] 
 	text_label.text = line["text"]
 	
-	var speaker = line["speaker"]
-
-	if speaker in SPEAKER_PORTRAITS:
-		portrait_rect.texture = load(SPEAKER_PORTRAITS[speaker])
-		portrait_rect.show()
-	else:
+	if line["speaker"] == "Narrator" or line["speaker"] == "System":
 		portrait_rect.hide()
+	else:
+		portrait_rect.show()
 	
 	# Typewriter Animation
 	text_label.visible_ratio = 0.0
@@ -101,32 +81,17 @@ func show_next_line():
 	tween.tween_property(text_label, "visible_ratio", 1.0, duration)
 	tween.finished.connect(func(): is_typing = false)
 
-func end_dialogue():
-	dialogue_panel.hide()
-	is_active = false
-	
-	# --- NEW: RE-ENABLE MOVEMENT ---
-	get_tree().call_group("player", "set_physics_process", true)
-	
-	on_cooldown = true
-	await get_tree().create_timer(0.5).timeout
-	on_cooldown = false
-
 func _input(event):
-	if not is_active: return
+	if not dialogue_panel.visible: return
 	
-	# --- NEW: ONLY LISTEN FOR E OR SPACE ---
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_E or event.keycode == KEY_SPACE:
-			
-			get_viewport().set_input_as_handled()
-			
-			if is_typing:
-				# SPEED UP: Kill the animation and show full text instantly
-				var tweens = get_tree().get_processed_tweens()
-				for t in tweens: t.kill()
-				text_label.visible_ratio = 1.0
-				is_typing = false
-			else:
-				# NEXT LINE
-				show_next_line()
+	# Check for Space, Enter, Mouse Click... OR "E" (interact)
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+		if is_typing:
+			# If typing, skip to the end instantly
+			var tweens = get_tree().get_processed_tweens()
+			for t in tweens: t.kill()
+			text_label.visible_ratio = 1.0
+			is_typing = false
+		else:
+			# If done typing, show next line
+			show_next_line()

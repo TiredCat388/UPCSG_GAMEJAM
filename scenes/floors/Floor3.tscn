@@ -393,11 +393,11 @@ _data = {
 &"npc_goblin_idle": SubResource("Animation_xmqyf")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nllak"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrghi"]
 resource_local_to_scene = true
 size = Vector2(672, 416)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrghi"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nllak"]
 resource_local_to_scene = true
 size = Vector2(101, 36)
 
@@ -418,7 +418,7 @@ position = Vector2(880, 488)
 [node name="DialogueSystem" parent="." unique_id=154207146 instance=ExtResource("4_ydomf")]
 visible = false
 
-[node name="npc" parent="." unique_id=435799220 node_paths=PackedStringArray("dialogue_system") groups=["player"] instance=ExtResource("5_2qf2x")]
+[node name="npc" parent="." unique_id=435799220 node_paths=PackedStringArray("dialogue_system") instance=ExtResource("5_2qf2x")]
 position = Vector2(320, 158)
 dialogue_system = NodePath("../DialogueSystem")
 dialogue_id = 4
@@ -435,7 +435,7 @@ position = Vector2(356, 329)
 
 [node name="CollisionShape2D" parent="RoomBounds" index="0" unique_id=1936798602]
 position = Vector2(204, -25)
-shape = SubResource("RectangleShape2D_nllak")
+shape = SubResource("RectangleShape2D_rrghi")
 
 [node name="ExitDoor" parent="." unique_id=674365676 instance=ExtResource("6_xmqyf")]
 script = ExtResource("7_im6qb")
@@ -443,7 +443,7 @@ floor_number = 3
 
 [node name="CollisionShape2D" parent="ExitDoor" index="0" unique_id=1936798602]
 position = Vector2(560.5, 530)
-shape = SubResource("RectangleShape2D_rrghi")
+shape = SubResource("RectangleShape2D_nllak")
 
 [editable path="npc"]
 [editable path="RoomBounds"]

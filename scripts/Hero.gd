@@ -278,7 +278,8 @@ func take_damage(amount: float):
 	if health <= 0:
 		print("Hero defeated!")
 		is_dead = true
-
+		hide()
+	
 
 func _ready():
 	# Find the player to follow

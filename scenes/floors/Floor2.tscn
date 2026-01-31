@@ -57,9 +57,13 @@ size = Vector2(608, 36)
 
 [node name="Floor2" type="Node2D" unique_id=1203568675]
 script = ExtResource("1_2kxia")
-floor_number = 5
+floor_number = 3
 
 [node name="GameplayRoot" type="Node2D" parent="." unique_id=933238444]
+
+[node name="MainCharacter" parent="GameplayRoot" unique_id=990402041 instance=ExtResource("7_mffj3")]
+process_mode = 4
+position = Vector2(1144, 360)
 
 [node name="WallTop" type="TileMapLayer" parent="GameplayRoot" unique_id=755456392]
 texture_filter = 1
@@ -103,10 +107,6 @@ position = Vector2(56, 56)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameplayRoot/BossSpawner" unique_id=1998191906]
 position = Vector2(560, 576)
 shape = SubResource("RectangleShape2D_2npgi")
-
-[node name="MainCharacter" parent="." unique_id=990402041 instance=ExtResource("7_mffj3")]
-process_mode = 4
-position = Vector2(1144, 360)
 
 [node name="DialogueSystem" parent="." unique_id=1297630051 instance=ExtResource("9_2npgi")]
 

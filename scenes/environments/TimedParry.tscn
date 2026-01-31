@@ -7,7 +7,7 @@
 
 [node name="LevelScene" type="Node2D" unique_id=1308449424]
 
-[node name="Warning" parent="." unique_id=959817101 groups=["warning"] instance=ExtResource("1_uphm2")]
+[node name="Warning" parent="." unique_id=959817101 instance=ExtResource("1_uphm2")]
 z_index = 51
 position = Vector2(322, 256)
 scale = Vector2(0.03, 0.03)
@@ -15,8 +15,15 @@ scale = Vector2(0.03, 0.03)
 [node name="Player" parent="." unique_id=23652815 instance=ExtResource("3_8o1cs")]
 position = Vector2(288, 306)
 collision_mask = 2
+ACCELERATION = null
+DECELERATION = null
+player_health = null
+dash_duration = null
+dash_cooldown = null
+parry_duration = null
+banana_spawn_cooldown = null
 
-[node name="Hero" parent="." unique_id=938446975 groups=["hero"] instance=ExtResource("2_5485p")]
+[node name="Hero" parent="." unique_id=938446975 instance=ExtResource("2_5485p")]
 position = Vector2(497, 311)
 fight_phase = 2
 charge_attack_damage = 0.0

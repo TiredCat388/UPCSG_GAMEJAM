@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvk12mdu11xs1" path="res://scripts/Hero.gd" id="1_6uswd"]
 [ext_resource type="Texture2D" uid="uid://c0bkq0ijbi2ry" path="res://assets/characters/HERO.png" id="2_0qwah"]
-[ext_resource type="Script" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
+[ext_resource type="Script" uid="uid://doc3c4ubr2ye6" path="res://scripts/BulletHellSpawner.gd" id="3_vk5kn"]
 [ext_resource type="PackedScene" uid="uid://bnjnuo7fgelbo" path="res://scenes/attacks/BaseProjectile.tscn" id="4_arq4a"]
 [ext_resource type="PackedScene" uid="uid://cak2yot5p3mmj" path="res://scenes/entities/Shield.tscn" id="5_wx53h"]
 

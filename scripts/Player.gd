@@ -1,8 +1,5 @@
 extends CharacterBody2D
 
-
-@onready var shield := $Shield
-
 @export var MAX_SPEED: float = 400.0
 @export var ACCELERATION: float = 1600.0
 @export var DECELERATION: float = 2000.0
@@ -11,7 +8,6 @@ var facing_direction: Vector2 = Vector2.RIGHT
 
 @export var player_health: float = 100.0
 var is_dead: bool = false
-var can_block: bool = false
 
 #region Player dash
 @export var dash_speed: float = 800.0
@@ -27,6 +23,12 @@ var parry_timer: float = 0.0
 var is_parrying: bool = false
 var parry_cooldown_timer: float = 0.0
 var parry_cooldown: float = 1
+
+func _ready() -> void:
+	for banana in get_tree().get_nodes_in_group("banana"):
+		banana.hide()
+		bananas.append(banana)
+		print("Added banana to pool: %s" % banana)
 
 func _start_dash() -> void:
 	velocity = dash_direction.normalized() * dash_speed
@@ -75,6 +77,7 @@ func throw_banana() -> void:
 func take_damage(amount: float) -> String:
 	if is_parrying:
 		print("Parried the attack!")
+		$"../MainCharacter".take_damage(25)
 		return "parried"
 
 	player_health -= amount
@@ -105,7 +108,7 @@ func _physics_process(delta: float) -> void:
 
 
 	if Input.is_action_just_pressed("parry"):
-		if parry_cooldown_timer <= 0.0 && can_block:
+		if parry_cooldown_timer <= 0.0 && GameManager.can_block:
 			animation_tree.set("parameters/goblin_block/blend_position", velocity.normalized())
 			is_parrying = true
 			parry_cooldown_timer = parry_cooldown

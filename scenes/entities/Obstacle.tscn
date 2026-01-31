@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://r6x073sd3s8k"]
+[gd_scene format=3 uid="uid://r6x073sd3s8k"]
 
 [ext_resource type="Texture2D" uid="uid://b67ej04kni127" path="res://assets/obstacle.png" id="1_1k00x"]
 [ext_resource type="Script" uid="uid://dgg4nty386siv" path="res://scripts/Obstacle.gd" id="1_x5s4b"]
 
-[node name="Obstacle" type="StaticBody2D"]
+[node name="Obstacle" type="StaticBody2D" unique_id=174413062 groups=["obstacle"]]
 script = ExtResource("1_x5s4b")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1967492443]
 position = Vector2(-7.1054274e-15, -3.3881318e-21)
 scale = Vector2(0.01543749, 0.0164375)
 texture = ExtResource("1_1k00x")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1803239170]
 polygon = PackedVector2Array(1, -13, -11, -5, -12, 5, 3, 12, 13, 6)

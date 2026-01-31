@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bca8lnj4g1of5"]
+
+[ext_resource type="Script" uid="uid://dvd7kflpialxf" path="res://scenes/floors/teleport.gd" id="1_cekom"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ronh"]
+
+[node name="teleport" type="Area2D" unique_id=843404184]
+script = ExtResource("1_cekom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566685283]
+shape = SubResource("RectangleShape2D_8ronh")

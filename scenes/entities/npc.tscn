@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dbhs2jqumnb08"]
 
-[ext_resource type="Script" uid="uid://b8v0ovasbeb6" path="res://scripts/NPC.gd" id="1_p5uw1"]
+[ext_resource type="Script" path="res://scripts/NPC.gd" id="1_p5uw1"]
 [ext_resource type="Texture2D" uid="uid://bpudd1whg4fjn" path="res://assets/characters/NPCENCOUNTERS.png" id="2_4kvco"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_67e1k"]
-radius = 25.0
+radius = 30.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hg1eu"]
 radius = 50.0
@@ -14,6 +14,7 @@ script = ExtResource("1_p5uw1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=634034095]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4kvco")
 hframes = 11
 vframes = 4

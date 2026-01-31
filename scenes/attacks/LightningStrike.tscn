@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://dhngdyga4d7ra"]
+
+[ext_resource type="Script" uid="uid://baq248xcitjy1" path="res://scenes/attacks/lightning_strike.gd" id="1_624nc"]
+[ext_resource type="Texture2D" uid="uid://cggi2m6akpc1l" path="res://assets/lightning/Explosion_1.png" id="1_or2b4"]
+[ext_resource type="Texture2D" uid="uid://cqr3e47uchf3g" path="res://assets/lightning/Explosion_2.png" id="2_624nc"]
+[ext_resource type="Texture2D" uid="uid://v2cs0ou6v5sq" path="res://assets/lightning/Explosion_3.png" id="3_rsjwb"]
+[ext_resource type="Texture2D" uid="uid://bjl8uac8gyres" path="res://assets/lightning/Explosion_4.png" id="4_rgb0g"]
+[ext_resource type="Texture2D" uid="uid://cpd301dkb1kkd" path="res://assets/lightning/Explosion_5.png" id="5_i2c11"]
+[ext_resource type="Texture2D" uid="uid://svkic1jkf4m" path="res://assets/lightning_thick/Explosion_2_1.png" id="7_uxant"]
+[ext_resource type="Texture2D" uid="uid://b00xy5cwgt6rb" path="res://assets/lightning_thick/Explosion_2_2.png" id="8_wgtpq"]
+[ext_resource type="Texture2D" uid="uid://bexp3dy8jgb62" path="res://assets/Hitbox.png" id="9_or2b4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1u5ai"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_or2b4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_624nc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rsjwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rgb0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i2c11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uxant")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wgtpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i2c11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rgb0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wgtpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rgb0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i2c11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uxant")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wgtpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i2c11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rgb0g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wgtpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rgb0g")
+}],
+"loop": false,
+"name": &"lightning",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_518o1"]
+radius = 57.07889
+
+[node name="LightningStrike" type="Node2D" unique_id=456607559]
+script = ExtResource("1_624nc")
+
+[node name="Lightning" type="AnimatedSprite2D" parent="." unique_id=64776776]
+position = Vector2(0, -132)
+scale = Vector2(0.41564405, 0.3933899)
+sprite_frames = SubResource("SpriteFrames_1u5ai")
+animation = &"lightning"
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=693451551]
+position = Vector2(-1, 0)
+scale = Vector2(0.33268443, 0.11160588)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=796386525]
+shape = SubResource("CircleShape2D_518o1")
+debug_color = Color(0, 0.56031877, 0.8871206, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox" unique_id=1376090728]
+visible = false
+scale = Vector2(2.084682, 6.017647)
+texture = ExtResource("9_or2b4")

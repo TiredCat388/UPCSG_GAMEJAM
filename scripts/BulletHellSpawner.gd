@@ -6,8 +6,8 @@ extends Node2D
 @export var PROJECTILE_SCENE: PackedScene
 @export var FIRE_TIMES: int = 50
 @export var FIRE_INTERVAL: float = 0.05
-@export var BULLET_SPEED: float = 150.0
-@export var SPIN_PER_SHOT: float = 6.0
+@export var BULLET_SPEED: float = 200.0
+@export var SPIN_PER_SHOT: float = 10.0
 @export var BULLET_ACCELERATION: float = 100.0
 
 var bullet_hell_is_on := false

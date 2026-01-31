@@ -21,7 +21,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var top_left: Vector2 = xform * Vector2(-extents.x, -extents.y)
 	var bottom_right: Vector2 = xform * Vector2(extents.x, extents.y)
 
-	cam.limit_left   = top_left.x - 30.0
-	cam.limit_top    = top_left.y - 30.0
-	cam.limit_right  = bottom_right.x + 30.0
-	cam.limit_bottom = bottom_right.y + 30.0
+	cam.limit_left   = int(top_left.x - 30.0)
+	cam.limit_top    = int(top_left.y - 30.0)
+	cam.limit_right  = int(bottom_right.x + 30.0)
+	cam.limit_bottom = int(bottom_right.y + 30.0)

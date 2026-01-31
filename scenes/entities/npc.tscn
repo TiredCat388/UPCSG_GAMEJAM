@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dbhs2jqumnb08"]
 
-[ext_resource type="Script" path="res://scripts/NPC.gd" id="1_p5uw1"]
+[ext_resource type="Script" uid="uid://b8v0ovasbeb6" path="res://scripts/NPC.gd" id="1_p5uw1"]
 [ext_resource type="Texture2D" uid="uid://bpudd1whg4fjn" path="res://assets/characters/NPCENCOUNTERS.png" id="2_4kvco"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_67e1k"]

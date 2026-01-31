@@ -1,17 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0k6e82chtv2y"]
+[gd_scene format=3 uid="uid://b0k6e82chtv2y"]
 
-[ext_resource type="Script" uid="uid://c6s5ybwjkgmbq" path="res://scripts/ui_scripts/main_menu.gd" id="1_vjtqc"]
+[ext_resource type="Script" uid="uid://bqskn8y4df2hp" path="res://scripts/ui_scripts/MainMenu.gd" id="1_vjtqc"]
 
-[node name="MainMenu" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainMenu" type="CanvasLayer" unique_id=1437519669]
 script = ExtResource("1_vjtqc")
 
-[node name="MainMenuBackgroud" type="TextureRect" parent="."]
+[node name="Control" type="Control" parent="." unique_id=531672960]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MainMenuBackgroud" type="TextureRect" parent="Control" unique_id=20421691]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,36 +20,38 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="MMBttnVBoxContainer" type="VBoxContainer" parent="."]
+[node name="MMBttnVBoxContainer" type="VBoxContainer" parent="Control" unique_id=1303353456]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -167.0
-offset_top = 27.0
-offset_right = 166.99976
-offset_bottom = 164.50003
+offset_left = 293.0
+offset_top = 277.0
+offset_right = 626.99976
+offset_bottom = 414.50003
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 21
 
-[node name="StartButton" type="Button" parent="MMBttnVBoxContainer"]
+[node name="StartButton" type="Button" parent="Control/MMBttnVBoxContainer" unique_id=933773922]
 layout_mode = 2
 size_flags_vertical = 3
 text = "START"
 
-[node name="SettingsButton" type="Button" parent="MMBttnVBoxContainer"]
+[node name="SettingsButton" type="Button" parent="Control/MMBttnVBoxContainer" unique_id=971164966]
 layout_mode = 2
 size_flags_vertical = 3
 text = "SETTINGS
 "
 
-[node name="QuitButton" type="Button" parent="MMBttnVBoxContainer"]
+[node name="QuitButton" type="Button" parent="Control/MMBttnVBoxContainer" unique_id=1762786637]
 layout_mode = 2
 size_flags_vertical = 3
 text = "QUIT
 "
 
-[connection signal="pressed" from="MMBttnVBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Control/MMBttnVBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/MMBttnVBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Control/MMBttnVBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

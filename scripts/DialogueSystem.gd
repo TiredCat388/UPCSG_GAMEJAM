@@ -71,7 +71,6 @@ func start_dialogue(id):
 func show_next_line():
 	if current_queue.is_empty():
 		dialogue_panel.hide()
-		emit_signal("dialogue_finished")
 		return
 
 	var line = current_queue.pop_front()

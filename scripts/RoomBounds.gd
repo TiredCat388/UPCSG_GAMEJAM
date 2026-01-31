@@ -1,7 +1,6 @@
 extends Area2D
 
 @export var camera_padding: float = 0.0  # optional margin
-@onready var boss = $"../../MainCharacter"
 
 func _on_body_entered(body: Node2D) -> void:
 	if !body.is_in_group("player"):
